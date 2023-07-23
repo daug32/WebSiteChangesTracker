@@ -1,10 +1,8 @@
 ﻿using System.Drawing;
 using NUnit.Framework;
-using WebSiteComparer.Core.ImageProcessing;
-using WebSiteComparer.Core.ImageProcessing.Implementation.Utils;
 using WebSiteComparer.Core.ImageProcessing.Models;
 
-namespace WebSiteComparer.Core.Tests.ImageProcessing;
+namespace WebSiteComparer.Core.ImageProcessing.Tests.ImageProcessing;
 
 public class CashedBitmapTests
 {

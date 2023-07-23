@@ -35,7 +35,7 @@ namespace WebSiteComparer.Core.WebPageProcessing.Implementation
         {
             DateTime date = DateTime.UtcNow;
 
-            // TODO: Move onto Parallel.ForEach
+            // TODO: Use Parallel.ForEach
             List<Func<IPage, Task>> functions = urls
                 .Select(
                     url =>
@@ -89,6 +89,7 @@ namespace WebSiteComparer.Core.WebPageProcessing.Implementation
             _screenshotRepository.Save( url, bitmap, date );
         }
 
+        // TODO: Add ScreenshotConfig object to encapsulate large amount of parameters
         private async Task<CashedBitmap> TakeScreenshotInternal(
             string url,
             IPage page,
@@ -117,6 +118,7 @@ namespace WebSiteComparer.Core.WebPageProcessing.Implementation
                     new PageScreenshotOptions
                     {
                         FullPage = true,
+                        // TODO: Set type by ScreenshotConfig
                         Type = ScreenshotType.Png
                     } );
 

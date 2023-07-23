@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using WebSiteComparer.Core.ImageProcessing.Models;
 
-namespace WebSiteComparer.Core.Tests.ImageProcessing;
+namespace WebSiteComparer.Core.ImageProcessing.Tests.ImageProcessing;
 
 public class MapTests
 {

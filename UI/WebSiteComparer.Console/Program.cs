@@ -6,11 +6,6 @@ namespace WebSiteComparer.Console;
 
 public class Program
 {
-    private static readonly IConfiguration _configuration = new ConfigurationBuilder()
-        .AddJsonFile( "appsettings.json" )
-        .AddEnvironmentVariables()
-        .Build();
-    
     public static async Task Main( string[] args )
     {
         await BuildHost( args ).StartAsync( args );
@@ -20,9 +15,20 @@ public class Program
     {
         return Host
             .CreateDefaultBuilder( args )
-            .ConfigureServices( services => services.AddDependencies( _configuration ) )
+            .ConfigureServices( services => services.AddDependencies( AddConfigurationFile()) )
             .Build()
             .Services
             .GetRequiredService<WebSiteComparerApplication>();
+    }
+
+    private static IConfigurationRoot AddConfigurationFile()
+    {
+        string? environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        
+        return new ConfigurationBuilder()
+            .AddJsonFile( "appsettings.json" )
+            .AddJsonFile( $"appsettings.{environment}.json", optional: true )
+            .AddEnvironmentVariables()
+            .Build();
     }
 }

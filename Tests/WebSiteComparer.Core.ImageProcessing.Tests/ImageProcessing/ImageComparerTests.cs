@@ -1,12 +1,11 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 using NUnit.Framework;
-using WebSiteComparer.Core.ImageProcessing;
 using WebSiteComparer.Core.ImageProcessing.Implementation.Comparing;
 using WebSiteComparer.Core.ImageProcessing.Models;
-using WebSiteComparer.Core.Tests.Utils;
+using WebSiteComparer.Core.ImageProcessing.Tests.Utils;
 
-namespace WebSiteComparer.Core.Tests.ImageProcessing;
+namespace WebSiteComparer.Core.ImageProcessing.Tests.ImageProcessing;
 
 public class ImageComparerTests
 {

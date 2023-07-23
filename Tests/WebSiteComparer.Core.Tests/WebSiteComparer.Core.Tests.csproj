@@ -20,4 +20,8 @@
       <ProjectReference Include="..\..\WebSiteComparer.Core\WebSiteComparer.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Sources" />
+    </ItemGroup>
+
 </Project>

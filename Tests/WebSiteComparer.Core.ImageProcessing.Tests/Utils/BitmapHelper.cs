@@ -1,10 +1,7 @@
 ﻿using System.Drawing;
-using System.Drawing.Imaging;
-using WebSiteComparer.Core.ImageProcessing;
-using WebSiteComparer.Core.ImageProcessing.Implementation.Utils;
 using WebSiteComparer.Core.ImageProcessing.Models;
 
-namespace WebSiteComparer.Core.Tests.Utils;
+namespace WebSiteComparer.Core.ImageProcessing.Tests.Utils;
 
 public class BitmapHelper
 {

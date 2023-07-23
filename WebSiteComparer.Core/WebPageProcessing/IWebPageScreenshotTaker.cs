@@ -7,7 +7,7 @@ namespace WebSiteComparer.Core.WebPageProcessing
 {
     public interface IWebPageScreenshotTaker
     {
-        // TODO: Add realization for multiple urls
+        // TODO: Add realization for multiple urls 
         Task<CashedBitmap> TakeScreenshotAsync(
             string url,
             int screenshotWidth,

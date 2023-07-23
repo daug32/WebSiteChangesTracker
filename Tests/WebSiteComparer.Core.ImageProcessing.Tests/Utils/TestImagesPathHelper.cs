@@ -1,4 +1,4 @@
-﻿namespace WebSiteComparer.Core.Tests.Utils;
+﻿namespace WebSiteComparer.Core.ImageProcessing.Tests.Utils;
 
 public class TestImagesPathHelper
 {
