@@ -1,29 +1,25 @@
 ﻿using Microsoft.Extensions.Configuration;
-using WebSiteComparer.Console.Models;
+using Microsoft.Extensions.Logging;
+using WebSiteComparer.Console.Commands;
 using WebSiteComparer.Console.Utils;
 using WebSiteComparer.Core;
-using WebSiteComparer.Core.WebPageProcessing;
-using WebSiteComparer.Core.WebPageProcessing.Models;
 
 namespace WebSiteComparer.Console;
 
 public class WebSiteComparerApplication
 {
+    private readonly ILogger _logger;
+    private readonly CommandBuilder _commandBuilder;
+
     private readonly List<WebsiteConfiguration> _websiteConfigurations;
-    
-    private readonly ILogService _logService;
-    private readonly IWebPageScreenshotTaker _screenshotTaker;
-    private readonly IWebSitesViewChangesTracker _webSitesViewChangesTracker; 
 
     public WebSiteComparerApplication(
         IConfiguration configuration,
-        IWebPageScreenshotTaker screenshotTaker,
-        IWebSitesViewChangesTracker webSitesViewChangesTracker,
-        ILogService logService )
+        ILogger<WebSiteComparerApplication> logger,
+        CommandBuilder commandBuilder )
     {
-        _screenshotTaker = screenshotTaker;
-        _webSitesViewChangesTracker = webSitesViewChangesTracker;
-        _logService = logService;
+        _logger = logger;
+        _commandBuilder = commandBuilder;
 
         _websiteConfigurations = configuration
                  .GetSection( "WebSites" )
@@ -33,42 +29,33 @@ public class WebSiteComparerApplication
 
     public async Task StartAsync( string[] args )
     {
-        _logService.Message( "Started" );
+        _logger.Log( LogLevel.Information, "Started" );
 
-        // ActionType actionType = ArgumentsHandler.Parse( args );
-        ActionType actionType = ActionType.GetScreenshots;
+        CommandType commandType = ParseActionType( args );
+        ICommand command = _commandBuilder.Build( commandType );
 
         try
         {
-            // ReSharper disable once ConvertIfStatementToSwitchStatement
-            if ( actionType == ActionType.NeedHelp )
-            {
-                System.Console.WriteLine( ArgumentsHandler.GetHelp() );
-                return;
-            }
-
-            if ( actionType == ActionType.CheckForUpdates )
-            {
-                await _webSitesViewChangesTracker.CheckForViewChanges( _websiteConfigurations );
-                return;
-            }
-
-            if ( actionType == ActionType.GetScreenshots )
-            {
-                foreach ( WebsiteConfiguration configuration in _websiteConfigurations )
-                {
-                    await _screenshotTaker.TakeScreenshotsAndSaveAsync(
-                        configuration.Urls,
-                        configuration.ScreenshotWidth,
-                        configuration.LoadConfiguration );
-                }
-            }
+            await command.ExecuteAsync( _websiteConfigurations );
         }
         catch ( Exception ex )
         {
-            _logService.Error( ex.Message );
+            _logger.LogCritical( ex, null );
         }
 
-        _logService.Message( "Completed" );
+        _logger.Log( LogLevel.Information, "Completed" );
+    }
+
+    private CommandType ParseActionType( string[] args )
+    {
+        try
+        {
+            return ArgumentsHandler.Parse( args );
+        }
+        catch ( ArgumentOutOfRangeException )
+        {
+            _logger.Log( LogLevel.Debug, $"Couldn't parse command type. {CommandType.NeedHelp} is used instead" );
+            return CommandType.NeedHelp;
+        }
     }
 }

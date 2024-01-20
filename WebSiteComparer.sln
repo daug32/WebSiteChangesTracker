@@ -7,17 +7,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Public", "Public", "{D9ECE1
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{327E4513-6D96-4B8E-B7E7-58853639F689}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteComparer.Core.Tests", "Tests\WebSiteComparer.Core.Tests\WebSiteComparer.Core.Tests.csproj", "{A8AE23F3-EE03-4CF6-B0C5-5C76FC22EAF7}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{22C5E299-EF6D-4A99-8D66-EAB675660390}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteComparer.Console", "UI\WebSiteComparer.Console\WebSiteComparer.Console.csproj", "{A3A26373-3DB6-498C-B15D-0B71546B9EC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteComparer.Core.ImageProcessing", "WebSiteComparer.Core.ImageProcessing\WebSiteComparer.Core.ImageProcessing.csproj", "{01D9899D-47DF-4C58-A03D-4EC55D98D5ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libs.ImageProcessing", "Libs.ImageProcessing\Libs.ImageProcessing.csproj", "{01D9899D-47DF-4C58-A03D-4EC55D98D5ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteComparer.Core.ImageProcessing.Tests", "Tests\WebSiteComparer.Core.ImageProcessing.Tests\WebSiteComparer.Core.ImageProcessing.Tests.csproj", "{CA8B2BBD-419A-4372-8962-70177C4BF247}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libs.ImageProcessing.Tests", "Tests\Libs.ImageProcessing.Tests\Libs.ImageProcessing.Tests.csproj", "{CA8B2BBD-419A-4372-8962-70177C4BF247}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{E886D9E2-6769-476C-8114-EFF473C6C389}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libs.Microsoft.Playwright", "Libs.Microsoft.Playwright\Libs.Microsoft.Playwright.csproj", "{3617A91C-0212-41D8-9F7F-1D9706F6342F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libs.ImageProcessing.Extensions", "Libs.ImageProcessing.Extensions\Libs.ImageProcessing.Extensions.csproj", "{196E98EA-C52B-42DF-8414-DEB075CAEEBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteComparer.UseCases", "WebSiteComparer.UseCases\WebSiteComparer.UseCases.csproj", "{326C8927-663B-402D-A149-5FF0620C6B42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +33,6 @@ Global
 		{97236950-46B3-4196-B1E6-CDE9CCC3D7A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97236950-46B3-4196-B1E6-CDE9CCC3D7A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97236950-46B3-4196-B1E6-CDE9CCC3D7A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A8AE23F3-EE03-4CF6-B0C5-5C76FC22EAF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8AE23F3-EE03-4CF6-B0C5-5C76FC22EAF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A8AE23F3-EE03-4CF6-B0C5-5C76FC22EAF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A8AE23F3-EE03-4CF6-B0C5-5C76FC22EAF7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A3A26373-3DB6-498C-B15D-0B71546B9EC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A3A26373-3DB6-498C-B15D-0B71546B9EC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3A26373-3DB6-498C-B15D-0B71546B9EC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,10 +45,24 @@ Global
 		{CA8B2BBD-419A-4372-8962-70177C4BF247}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA8B2BBD-419A-4372-8962-70177C4BF247}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA8B2BBD-419A-4372-8962-70177C4BF247}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3617A91C-0212-41D8-9F7F-1D9706F6342F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3617A91C-0212-41D8-9F7F-1D9706F6342F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3617A91C-0212-41D8-9F7F-1D9706F6342F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3617A91C-0212-41D8-9F7F-1D9706F6342F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{196E98EA-C52B-42DF-8414-DEB075CAEEBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{196E98EA-C52B-42DF-8414-DEB075CAEEBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{196E98EA-C52B-42DF-8414-DEB075CAEEBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{196E98EA-C52B-42DF-8414-DEB075CAEEBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{326C8927-663B-402D-A149-5FF0620C6B42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{326C8927-663B-402D-A149-5FF0620C6B42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{326C8927-663B-402D-A149-5FF0620C6B42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{326C8927-663B-402D-A149-5FF0620C6B42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{A8AE23F3-EE03-4CF6-B0C5-5C76FC22EAF7} = {327E4513-6D96-4B8E-B7E7-58853639F689}
 		{A3A26373-3DB6-498C-B15D-0B71546B9EC3} = {22C5E299-EF6D-4A99-8D66-EAB675660390}
-		{CA8B2BBD-419A-4372-8962-70177C4BF247} = {327E4513-6D96-4B8E-B7E7-58853639F689}
+		{01D9899D-47DF-4C58-A03D-4EC55D98D5ED} = {E886D9E2-6769-476C-8114-EFF473C6C389}
+		{CA8B2BBD-419A-4372-8962-70177C4BF247} = {E886D9E2-6769-476C-8114-EFF473C6C389}
+		{3617A91C-0212-41D8-9F7F-1D9706F6342F} = {E886D9E2-6769-476C-8114-EFF473C6C389}
+		{196E98EA-C52B-42DF-8414-DEB075CAEEBC} = {E886D9E2-6769-476C-8114-EFF473C6C389}
 	EndGlobalSection
 EndGlobal

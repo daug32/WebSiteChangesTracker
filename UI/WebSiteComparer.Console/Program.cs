@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace WebSiteComparer.Console;
 
@@ -13,22 +14,34 @@ public class Program
 
     private static WebSiteComparerApplication BuildHost( string[] args )
     {
-        return Host
+        IHost host = Host
             .CreateDefaultBuilder( args )
-            .ConfigureServices( services => services.AddDependencies( AddConfigurationFile()) )
-            .Build()
-            .Services
-            .GetRequiredService<WebSiteComparerApplication>();
+            .ConfigureAppConfiguration( AddConfigurationFile )
+            .ConfigureLogging( ConfigureLogging )
+            .ConfigureServices( AddDependencies )
+            .Build();
+
+        return host.Services.GetRequiredService<WebSiteComparerApplication>();
     }
 
-    private static IConfigurationRoot AddConfigurationFile()
+    private static void AddConfigurationFile( HostBuilderContext context, IConfigurationBuilder configurationBuilder )
     {
         string? environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-        
-        return new ConfigurationBuilder()
+
+        configurationBuilder
             .AddJsonFile( "appsettings.json" )
             .AddJsonFile( $"appsettings.{environment}.json", optional: true )
-            .AddEnvironmentVariables()
-            .Build();
+            .AddEnvironmentVariables();
+    }
+
+    private static void ConfigureLogging( HostBuilderContext context, ILoggingBuilder loggingBuilder )
+    {
+        loggingBuilder.ClearProviders();
+        loggingBuilder.AddConsole();
+    }
+
+    private static void AddDependencies( HostBuilderContext context, IServiceCollection services )
+    {
+        services.AddDependencies( context.Configuration );
     }
 }

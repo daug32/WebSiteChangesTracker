@@ -1,5 +1,12 @@
 ﻿{
   "$schema": "http://json.schemastore.org/launchsettings.json",
+  "Logging": {
+    "IncludeScopes": true,
+    "LogLevel": {
+      "Default": "Trace",
+      "System": "Information"
+    }
+  },
   "profiles": {
     "WebSiteComparer.Console": {
       "commandName": "Project",
