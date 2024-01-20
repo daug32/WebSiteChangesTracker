@@ -3,7 +3,7 @@ using WebSiteComparer.Console.Commands;
 
 namespace WebSiteComparer.Console.Utils;
 
-public static class ArgumentsHandler
+internal static class ArgumentsHandler
 {
     private const string HelpCommand = "help";
 
@@ -20,12 +20,7 @@ public static class ArgumentsHandler
 
     public static CommandType Parse( IEnumerable<string> args )
     {
-        string? action = args.FirstOrDefault( arg => !string.IsNullOrWhiteSpace( arg ) );
-        if ( action == null )
-        {
-            throw new ArgumentException( "No action type was specified" );
-        }
-
+        string action = args.FirstOrDefault( arg => !string.IsNullOrWhiteSpace( arg ) ) ?? String.Empty;
         action = action.Trim().ToLower();
 
         return action switch
@@ -33,8 +28,7 @@ public static class ArgumentsHandler
             "get-screenshots" => CommandType.UpdateScreenshots,
             "check-for-changes" => CommandType.CheckForChanges,
             "help" => CommandType.NeedHelp,
-            _ => throw new ArgumentException(
-                $"Action wasn't recognized. Type \"{HelpCommand}\" to get list of available commands and their descriptions" )
+            _ => throw new ArgumentOutOfRangeException( nameof( action ), action )
         };
     }
 }

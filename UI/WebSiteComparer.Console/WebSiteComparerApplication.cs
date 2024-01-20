@@ -40,7 +40,7 @@ public class WebSiteComparerApplication
         }
         catch ( Exception ex )
         {
-            _logger.LogCritical( ex, null, null );
+            _logger.LogCritical( ex, null );
         }
 
         _logger.Log( LogLevel.Information, "Completed" );
@@ -52,7 +52,7 @@ public class WebSiteComparerApplication
         {
             return ArgumentsHandler.Parse( args );
         }
-        catch ( Exception )
+        catch ( ArgumentOutOfRangeException )
         {
             _logger.Log( LogLevel.Debug, $"Couldn't parse command type. {CommandType.NeedHelp} is used instead" );
             return CommandType.NeedHelp;

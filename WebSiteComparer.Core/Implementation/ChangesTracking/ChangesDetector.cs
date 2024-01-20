@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using Libs.ImageProcessing;
 using Libs.ImageProcessing.Extensions;
 using Libs.ImageProcessing.Models;
+using Libs.Microsoft.Playwright.Factories;
 using Microsoft.Extensions.Logging;
+using Microsoft.Playwright;
 using WebSiteComparer.Core.ChangesTracking;
 using WebSiteComparer.Core.Implementation.Extensions;
 using WebSiteComparer.Core.Screenshots;
@@ -63,11 +65,19 @@ internal class ChangesDetector : IChangesDetector
             directoryInfo.ClearDirectory();
         }
 
-        Dictionary<Uri, CashedBitmap> currentStates = await _screenshotTaker.TakeScreenshotAsync( screenshotOptions );
+        IBrowser browser = await BrowserFactory.GetBrowserAsync();
 
         await Parallel.ForEachAsync(
-            currentStates,
-            async ( screenshotData, _ ) => await CompareToOldVersionAsync( screenshotData.Key, screenshotData.Value ) );
+            screenshotOptions,
+            async ( screenshotOption, _ ) =>
+            {
+                IPage page = await browser.NewPageAsync();
+                CashedBitmap screenshot = await _screenshotTaker.TakeScreenshotAsync( page, screenshotOption );
+                
+                await Task.WhenAll(
+                    CompareToOldVersionAsync( screenshotOption.Uri, screenshot ),
+                    page.CloseAsync() );
+            } );
     }
 
     private async Task CompareToOldVersionAsync( Uri uri, CashedBitmap newState )

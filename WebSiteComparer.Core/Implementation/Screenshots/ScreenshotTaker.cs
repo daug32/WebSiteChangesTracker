@@ -7,7 +7,6 @@ using Libs.ImageProcessing.Extensions;
 using Libs.ImageProcessing.Models;
 using Libs.Microsoft.Playwright;
 using Libs.Microsoft.Playwright.Factories;
-using Libs.Microsoft.Playwright.Screenshots;
 using Microsoft.Extensions.Logging;
 using Microsoft.Playwright;
 using WebSiteComparer.Core.Screenshots;
@@ -80,7 +79,11 @@ internal class ScreenshotTaker : IScreenshotTaker
         try
         {
             return await page
-                .TakeScreenshotAsync()
+                .ScreenshotAsync( new PageScreenshotOptions
+                {
+                    FullPage = true,
+                    Type = ScreenshotType.Png
+                } )
                 .ToCashedBitmapAsync();
         }
         catch ( Exception ex )

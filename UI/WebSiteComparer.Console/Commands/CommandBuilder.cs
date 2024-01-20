@@ -22,12 +22,12 @@ public class CommandBuilder
         {
             CommandType.NeedHelp => new GetHelpCommand(),
             CommandType.UpdateScreenshots => new UpdateScreenshotsCommand( GetService<UpdateScreenshotsCommandHandler>() ),
-            CommandType.CheckForChanges => new FindChangesCommand( GetService<IChangesDetector>() ),
+            CommandType.CheckForChanges => new FindChangesCommand( GetService<FindChangesCommandHandler>() ),
             _ => throw new ArgumentOutOfRangeException( nameof( commandType ), commandType, null )
         };
     }
 
-    private T GetService<T>()
+    private T GetService<T>() where T : notnull
     {
         return _serviceProvider.GetRequiredService<T>();
     }

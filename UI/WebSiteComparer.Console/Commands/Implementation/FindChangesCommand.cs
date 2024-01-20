@@ -1,21 +1,22 @@
 ﻿using WebSiteComparer.Core;
 using WebSiteComparer.Core.ChangesTracking;
+using WebSiteComparer.UseCases;
 
 namespace WebSiteComparer.Console.Commands.Implementation;
 
-public class FindChangesCommand : ICommand
+internal class FindChangesCommand : ICommand
 {
-    private readonly IChangesDetector _changesDetector;
+    private readonly FindChangesCommandHandler _handler;
 
-    public FindChangesCommand( IChangesDetector changesDetector )
+    public FindChangesCommand( FindChangesCommandHandler handler )
     {
-        _changesDetector = changesDetector;
+        _handler = handler;
     }
 
     public CommandType CommandType => CommandType.CheckForChanges;
 
     public async Task ExecuteAsync( List<WebsiteConfiguration> websiteConfigurations )
     {
-        await _changesDetector.FindChangesAsync( websiteConfigurations );
+        await _handler.Handle( new UseCases.FindChangesCommand( websiteConfigurations ) );
     }
 }

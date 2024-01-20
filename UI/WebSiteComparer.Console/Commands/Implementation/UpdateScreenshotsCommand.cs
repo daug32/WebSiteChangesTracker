@@ -3,7 +3,7 @@ using WebSiteComparer.UseCases;
 
 namespace WebSiteComparer.Console.Commands.Implementation;
 
-public class UpdateScreenshotsCommand : ICommand
+internal class UpdateScreenshotsCommand : ICommand
 {
     private readonly UpdateScreenshotsCommandHandler _handler;
 
