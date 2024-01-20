@@ -54,7 +54,7 @@ public class WebSiteComparerApplication
         }
         catch ( Exception )
         {
-            _logger.Log( LogLevel.Information, $"Couldn't parse command type. {CommandType.NeedHelp} is used instead" );
+            _logger.Log( LogLevel.Debug, $"Couldn't parse command type. {CommandType.NeedHelp} is used instead" );
             return CommandType.NeedHelp;
         }
     }
