@@ -1,24 +1,23 @@
-﻿using Libs.Microsoft.Playwright.PageLoading;
-using Microsoft.Playwright;
+﻿using Microsoft.Playwright;
 
-namespace Libs.Microsoft.Playwright.Screenshots
+namespace Libs.Microsoft.Playwright.Screenshots;
+
+public static class PageScreenshotsExtensions
 {
-    public static class PageScreenshotsExtensions
+    public static async Task<byte[]> TakeScreenshotAsync( 
+        this IPage pageHandler, 
+        PageScreenshotOptions? screenshotOptions = null )
     {
-        public static async Task<byte[]> TakeScreenshotAsync( this IPage pageHandler )
+        screenshotOptions ??= new PageScreenshotOptions
         {
-            var screenshotOptions = new PageScreenshotOptions
-            {
-                FullPage = true,
-                // TODO: Set type by ScreenshotConfig
-                Type = ScreenshotType.Png
-            };
+            FullPage = true,
+            Type = ScreenshotType.Png
+        };
 
-            byte[] buffer = await pageHandler.ScreenshotAsync( screenshotOptions );
+        byte[] buffer = await pageHandler.ScreenshotAsync( screenshotOptions );
 
-            await pageHandler.CloseAsync();
+        await pageHandler.CloseAsync();
 
-            return buffer;
-        }
+        return buffer;
     }
 }

@@ -23,6 +23,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\WebSiteComparer.Core\WebSiteComparer.Core.csproj" />
+      <ProjectReference Include="..\..\WebSiteComparer.UseCases\WebSiteComparer.UseCases.csproj" />
     </ItemGroup>
 
 </Project>

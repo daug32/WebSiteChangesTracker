@@ -1,11 +1,11 @@
-﻿namespace Libs.Microsoft.Playwright.PageLoading.Implementation
+﻿namespace Libs.Microsoft.Playwright.PageLoading.Implementation;
+
+internal static class JavaScriptLibs
 {
-    internal static class JavaScriptLibs
+    public static string WaitForTransitionEndAtElement( IEnumerable<string> selectors )
     {
-        public static string WaitForTransitionEndAtElement( IEnumerable<string> selectors )
-        {
-            string serializedSelectors = selectors.Aggregate("", (result, el) => $"'{el}', {result}" );
-            return $@"
+        string serializedSelectors = selectors.Aggregate("", (result, el) => $"'{el}', {result}" );
+        return $@"
 (function(){{
 if (!document.transitionWaiter) {{
     let selectors = [{serializedSelectors}];
@@ -36,11 +36,10 @@ for (let i = 0; i < document.transitionWaiter.length; i++) {{
 
 return !hasNotInitialized && document.transitionWaiter.every(waiter => waiter.status);
 }})();";
-        }
+    }
 
-        public static string IsDocumentReady()
-        {
-            return "(function(){if(document.readyState == 'complete'){return 1}})()";
-        }
+    public static string IsDocumentReady()
+    {
+        return "(function(){if(document.readyState == 'complete'){return 1}})()";
     }
 }

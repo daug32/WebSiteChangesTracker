@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using WebSiteComparer.Console.Commands;
 using WebSiteComparer.Core;
+using WebSiteComparer.UseCases;
 
 namespace WebSiteComparer.Console;
 
@@ -12,10 +13,27 @@ public static class ConfigureDependencies
         IConfiguration configuration )
     {
         services.AddScoped( _ => configuration );
+
         services.AddScoped<WebSiteComparerApplication>();
         services.AddScoped<CommandBuilder>();
-        services.AddWebSiteComparer();
-        
+
+        AddWebSiteComparer( services, configuration );
+
         return services;
+    }
+
+    private static void AddWebSiteComparer( IServiceCollection services, IConfiguration configuration )
+    {
+        var websiteComparerConfig = configuration
+            .GetSection( "WebSiteComparerConfiguration" )
+            .Get<WebSiteComparerConfiguration>();
+
+        if ( websiteComparerConfig is null )
+        {
+            throw new ArgumentException( $"Couldn't get configuration: {nameof( WebSiteComparerConfiguration )}" );
+        }
+
+        services.AddWebSiteComparer( websiteComparerConfig );
+        services.AddWebSiteComparerUseCases();
     }
 }

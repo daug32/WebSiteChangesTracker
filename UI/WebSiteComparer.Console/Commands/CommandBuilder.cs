@@ -1,15 +1,16 @@
 ﻿using WebSiteComparer.Console.Commands.Implementation;
-using WebSiteComparer.Core.Screenshots;
+using WebSiteComparer.UseCases;
+using UpdateScreenshotsCommand = WebSiteComparer.Console.Commands.Implementation.UpdateScreenshotsCommand;
 
 namespace WebSiteComparer.Console.Commands;
 
 public class CommandBuilder
 {
-    private readonly IScreenshotTaker _screenshotTaker;
+    private readonly UpdateScreenshotsCommandHandler _updateScreenshotsCommandHandler;
 
-    public CommandBuilder( IScreenshotTaker screenshotTaker )
+    public CommandBuilder( UpdateScreenshotsCommandHandler updateScreenshotsCommandHandler )
     {
-        _screenshotTaker = screenshotTaker;
+        _updateScreenshotsCommandHandler = updateScreenshotsCommandHandler;
     }
 
     public ICommand Build( CommandType commandType )
@@ -17,7 +18,7 @@ public class CommandBuilder
         return commandType switch
         {
             CommandType.NeedHelp => new GetHelpCommand(),
-            CommandType.UpdateScreenshots => new UpdateScreenshots( _screenshotTaker ),
+            CommandType.UpdateScreenshots => new UpdateScreenshotsCommand( _updateScreenshotsCommandHandler ),
             CommandType.CheckForChanges => new CheckForChanges(),
             _ => throw new ArgumentOutOfRangeException( nameof( commandType ), commandType, null )
         };

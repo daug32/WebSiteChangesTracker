@@ -1,12 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace WebSiteComparer.Core
+namespace WebSiteComparer.Core;
+
+public interface IWebSitesViewChangesTracker
 {
-    public interface IWebSitesViewChangesTracker
-    {
-        Task CheckForViewChanges( 
-            WebsiteConfiguration configuration,
-            CancellationToken token = default );
-    }
+    Task CheckForViewChanges( 
+        WebsiteConfiguration configuration,
+        CancellationToken token = default );
 }

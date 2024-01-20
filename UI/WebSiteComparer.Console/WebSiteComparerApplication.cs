@@ -21,9 +21,9 @@ public class WebSiteComparerApplication
         _commandBuilder = commandBuilder;
 
         _websiteConfigurations = configuration
-                                     .GetSection( "WebSites" )
-                                     .Get<List<WebsiteConfiguration>>()
-                                 ?? throw new ArgumentException( "Configuration for Websites not found" );
+                 .GetSection( "WebSites" )
+                 .Get<List<WebsiteConfiguration>>()
+             ?? throw new ArgumentException( "Configuration for Websites not found" );
     }
 
     public async Task StartAsync( string[] args )
