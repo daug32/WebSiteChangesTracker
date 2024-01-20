@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text;
 
-namespace WebSiteComparer.Core.Extensions;
+namespace WebSiteComparer.Core.Implementation.Extensions;
 
-public static class UriExtensions
+internal static class UriExtensions
 {
     public static string ToFilePath( this Uri uri )
     {

@@ -7,9 +7,9 @@ public class ScreenshotOptions
     public Uri Uri { get; }
     public int Width { get; }
 
-    public ScreenshotOptions( string url, int width )
+    public ScreenshotOptions( string uri, int width )
     {
-        Uri = new Uri( url );
+        Uri = new Uri( uri );
         Width = width < 1
             ? throw new ArgumentException( nameof( width ) )
             : width;

@@ -1,6 +1,8 @@
-﻿namespace Libs.System.IO.Extensions;
+﻿using System.IO;
 
-public static class DirectoryInfoExtensions
+namespace WebSiteComparer.Core.Implementation.Extensions;
+
+internal static class DirectoryInfoExtensions
 {
     public static void ClearDirectory( this DirectoryInfo directoryInfo )
     {

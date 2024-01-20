@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using WebSiteComparer.Console.Commands.Implementation;
-using WebSiteComparer.Core;
 using WebSiteComparer.Core.ChangesTracking;
 using WebSiteComparer.UseCases;
+using FindChangesCommand = WebSiteComparer.Console.Commands.Implementation.FindChangesCommand;
 using UpdateScreenshotsCommand = WebSiteComparer.Console.Commands.Implementation.UpdateScreenshotsCommand;
 
 namespace WebSiteComparer.Console.Commands;
@@ -22,15 +21,8 @@ public class CommandBuilder
         return commandType switch
         {
             CommandType.NeedHelp => new GetHelpCommand(),
-            
-            CommandType.UpdateScreenshots => new UpdateScreenshotsCommand( 
-                GetService<UpdateScreenshotsCommandHandler>() ),
-            
-            CommandType.CheckForChanges => new CheckForChanges( 
-                GetService<IChangesTracker>(), 
-                GetService<ILogger<CheckForChanges>>(),
-                GetService<WebSiteComparerConfiguration>() ),
-
+            CommandType.UpdateScreenshots => new UpdateScreenshotsCommand( GetService<UpdateScreenshotsCommandHandler>() ),
+            CommandType.CheckForChanges => new FindChangesCommand( GetService<IChangesDetector>() ),
             _ => throw new ArgumentOutOfRangeException( nameof( commandType ), commandType, null )
         };
     }

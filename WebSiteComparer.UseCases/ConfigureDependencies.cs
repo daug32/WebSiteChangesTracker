@@ -6,7 +6,7 @@ public static class ConfigureDependencies
 {
     public static IServiceCollection AddWebSiteComparerUseCases( this IServiceCollection services )
     {
-        services.AddScoped<CheckForChangesCommandHandler>();
+        services.AddScoped<FindChangesCommandHandler>();
         services.AddScoped<UpdateScreenshotsCommandHandler>();
 
         return services;

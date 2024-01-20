@@ -2,9 +2,9 @@
 using Libs.ImageProcessing;
 using Libs.ImageProcessing.Implementation.Comparing;
 using WebSiteComparer.Core.ChangesTracking;
-using WebSiteComparer.Core.ChangesTracking.Implementation;
+using WebSiteComparer.Core.Implementation.ChangesTracking;
+using WebSiteComparer.Core.Implementation.Screenshots;
 using WebSiteComparer.Core.Screenshots;
-using WebSiteComparer.Core.Screenshots.Implementation;
 
 namespace WebSiteComparer.Core;
 
@@ -18,7 +18,7 @@ public static class ConfigureDependencies
 
         services.AddScoped<IScreenshotTaker, ScreenshotTaker>();
         services.AddScoped<IScreenshotRepository, ScreenshotsRepository>();
-        services.AddScoped<IChangesTracker, ChangesTracker>();
+        services.AddScoped<IChangesDetector, ChangesDetector>();
             
         services.AddScoped<IImageComparer, CashedBitmapComparer>();
 

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using Libs.ImageProcessing.Models;
-using WebSiteComparer.Core.Extensions;
+using WebSiteComparer.Core.Implementation.Extensions;
+using WebSiteComparer.Core.Screenshots;
 
-namespace WebSiteComparer.Core.Screenshots.Implementation;
+namespace WebSiteComparer.Core.Implementation.Screenshots;
 
 internal class ScreenshotsRepository : IScreenshotRepository
 {
@@ -15,11 +13,6 @@ internal class ScreenshotsRepository : IScreenshotRepository
     public ScreenshotsRepository( WebSiteComparerConfiguration configuration )
     {
         _directory = configuration.ScreenshotDirectory;
-    }
-
-    public List<string> GetAll()
-    {
-        return Directory.GetFiles( _directory ).ToList();
     }
 
     public string? Get( Uri uri )

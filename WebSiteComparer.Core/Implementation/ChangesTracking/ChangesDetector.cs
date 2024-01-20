@@ -6,24 +6,25 @@ using System.Threading.Tasks;
 using Libs.ImageProcessing;
 using Libs.ImageProcessing.Extensions;
 using Libs.ImageProcessing.Models;
-using Libs.System.IO.Extensions;
 using Microsoft.Extensions.Logging;
-using WebSiteComparer.Core.Extensions;
+using WebSiteComparer.Core.ChangesTracking;
+using WebSiteComparer.Core.Implementation.Extensions;
 using WebSiteComparer.Core.Screenshots;
 
-namespace WebSiteComparer.Core.ChangesTracking.Implementation;
+namespace WebSiteComparer.Core.Implementation.ChangesTracking;
 
-internal class ChangesTracker : IChangesTracker
+internal class ChangesDetector : IChangesDetector
 {
-    private readonly WebSiteComparerConfiguration _configuration;
     private readonly IScreenshotTaker _screenshotTaker;
     private readonly IScreenshotRepository _screenshotRepository;
     private readonly IImageComparer _imageComparer;
     private readonly ILogger _logger;
+    
+    private readonly string _comparingOutputDirectory;
 
-    public ChangesTracker( 
+    public ChangesDetector( 
         IImageComparer imageComparer,
-        ILogger<ChangesTracker> logger,
+        ILogger<ChangesDetector> logger,
         IScreenshotTaker screenshotTaker,
         IScreenshotRepository screenshotRepository,
         WebSiteComparerConfiguration configuration )
@@ -31,31 +32,45 @@ internal class ChangesTracker : IChangesTracker
         _logger = logger;
         _screenshotTaker = screenshotTaker;
         _screenshotRepository = screenshotRepository;
-        _configuration = configuration;
+        _comparingOutputDirectory = configuration.ChangesTrackingOutputDirectory;
         _imageComparer = imageComparer;
     }
 
-    public async Task FindChanges( IEnumerable<WebsiteConfiguration> configurations )
+    public Task FindChangesAsync( IEnumerable<WebsiteConfiguration> configurations )
     {
-        var options = configurations
+        var screenshotOptions = configurations
             .SelectMany( configuration => configuration.Urls
                 .Select( url => new ScreenshotOptions( url, configuration.ScreenshotWidth ) ) )
             .ToList();
 
-        var directoryInfo = new DirectoryInfo( _configuration.ChangesTrackingOutputDirectory );
+        return FindChangesInternalAsync( screenshotOptions );
+    }
+
+    public Task FindChangesAsync( WebsiteConfiguration configuration )
+    {
+        var screenshotOptions = configuration.Urls
+            .Select( url => new ScreenshotOptions( url, configuration.ScreenshotWidth ) )
+            .ToList();
+
+        return FindChangesInternalAsync( screenshotOptions );
+    }
+
+    private async Task FindChangesInternalAsync( List<ScreenshotOptions> screenshotOptions )
+    {
+        var directoryInfo = new DirectoryInfo( _comparingOutputDirectory );
         if ( directoryInfo.Exists )
         {
             directoryInfo.ClearDirectory();
         }
 
-        Dictionary<Uri, CashedBitmap> currentStates = await _screenshotTaker.TakeScreenshotAsync( options );
+        Dictionary<Uri, CashedBitmap> currentStates = await _screenshotTaker.TakeScreenshotAsync( screenshotOptions );
 
         await Parallel.ForEachAsync(
             currentStates,
-            async ( screenshotData, _ ) => await FindChanges( screenshotData.Key, screenshotData.Value ) );
+            async ( screenshotData, _ ) => await CompareToOldVersionAsync( screenshotData.Key, screenshotData.Value ) );
     }
 
-    private async Task FindChanges( Uri uri, CashedBitmap newState )
+    private async Task CompareToOldVersionAsync( Uri uri, CashedBitmap newState )
     {
         string? imagePath = _screenshotRepository.Get( uri );
 
@@ -77,6 +92,6 @@ internal class ChangesTracker : IChangesTracker
     private string BuildFilePath( float changesPercent, Uri uri )
     {
         float serializedChangesPercent = MathF.Ceiling( changesPercent );
-        return $"{_configuration.ChangesTrackingOutputDirectory}/{serializedChangesPercent}_{uri.ToFilePath()}";
+        return $"{_comparingOutputDirectory}/{serializedChangesPercent}_{uri.ToFilePath()}";
     }
 }

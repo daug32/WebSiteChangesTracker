@@ -17,7 +17,6 @@
       <ProjectReference Include="..\Libs.ImageProcessing.Extensions\Libs.ImageProcessing.Extensions.csproj" />
       <ProjectReference Include="..\Libs.ImageProcessing\Libs.ImageProcessing.csproj" />
       <ProjectReference Include="..\Libs.Microsoft.Playwright\Libs.Microsoft.Playwright.csproj" />
-      <ProjectReference Include="..\Libs.System.IO.Extensions\Libs.System.IO.Extensions.csproj" />
     </ItemGroup>
 
 </Project>

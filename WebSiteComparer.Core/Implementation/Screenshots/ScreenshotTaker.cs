@@ -10,8 +10,9 @@ using Libs.Microsoft.Playwright.Factories;
 using Libs.Microsoft.Playwright.Screenshots;
 using Microsoft.Extensions.Logging;
 using Microsoft.Playwright;
+using WebSiteComparer.Core.Screenshots;
 
-namespace WebSiteComparer.Core.Screenshots.Implementation;
+namespace WebSiteComparer.Core.Implementation.Screenshots;
 
 internal class ScreenshotTaker : IScreenshotTaker
 {
