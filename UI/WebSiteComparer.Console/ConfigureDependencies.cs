@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WebSiteComparer.Console.Services;
+using WebSiteComparer.Console.Commands;
 using WebSiteComparer.Core;
-using WebSiteComparer.Core.WebPageProcessing;
 
 namespace WebSiteComparer.Console;
 
@@ -14,10 +13,8 @@ public static class ConfigureDependencies
     {
         services.AddScoped( _ => configuration );
         services.AddScoped<WebSiteComparerApplication>();
-        services.AddScoped<ILogService, ConsoleLogService>();
-        
-        string screenshotsDirectory = configuration.GetSection( "ScreenshotsDirectory" ).Value!;
-        services.AddWebSiteComparer( screenshotsDirectory );
+        services.AddScoped<CommandBuilder>();
+        services.AddWebSiteComparer();
         
         return services;
     }

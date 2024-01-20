@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using WebSiteComparer.Console.Models;
+using WebSiteComparer.Console.Commands;
 
 namespace WebSiteComparer.Console.Utils;
 
@@ -18,7 +18,7 @@ public static class ArgumentsHandler
         return builder.ToString();
     }
 
-    public static ActionType Parse( IEnumerable<string> args )
+    public static CommandType Parse( IEnumerable<string> args )
     {
         string? action = args.FirstOrDefault( arg => !string.IsNullOrWhiteSpace( arg ) );
         if ( action == null )
@@ -30,9 +30,9 @@ public static class ArgumentsHandler
 
         return action switch
         {
-            "get-screenshots" => ActionType.GetScreenshots,
-            "check-for-changes" => ActionType.CheckForUpdates,
-            "help" => ActionType.NeedHelp,
+            "get-screenshots" => CommandType.UpdateScreenshots,
+            "check-for-changes" => CommandType.CheckForChanges,
+            "help" => CommandType.NeedHelp,
             _ => throw new ArgumentException(
                 $"Action wasn't recognized. Type \"{HelpCommand}\" to get list of available commands and their descriptions" )
         };
