@@ -52,21 +52,11 @@ internal class ScreenshotTaker : IScreenshotTaker
 
     public async Task<CashedBitmap> TakeScreenshotAsync( IPage page, ScreenshotOptions options )
     {
-        Log( LogLevel.Information, "Going to a page", options.Uri );
+        Log( LogLevel.Information, "Loading a page", options.Uri );
         try
         {
             await page.GotoAsync( options.Uri.ToString() );
             await page.SetPageWidth( options.Width );
-        }
-        catch ( Exception ex )
-        {
-            Log( ex, "Couldn't get to the page", options.Uri );
-            throw;
-        }
-
-        Log( LogLevel.Information, "Waiting for page to load", options.Uri );
-        try
-        {
             await page.WaitForLoadStateAsync( LoadState.NetworkIdle );
         }
         catch ( Exception ex )
@@ -82,7 +72,8 @@ internal class ScreenshotTaker : IScreenshotTaker
                 .ScreenshotAsync( new PageScreenshotOptions
                 {
                     FullPage = true,
-                    Type = ScreenshotType.Png
+                    Type = ScreenshotType.Png,
+                    Animations = ScreenshotAnimations.Disabled
                 } )
                 .ToCashedBitmapAsync();
         }
