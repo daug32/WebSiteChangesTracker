@@ -11,9 +11,9 @@ public static class ArgumentsHandler
     {
         var builder = new StringBuilder();
 
-        builder.AppendLine( "help -\tShow List of available commands" );
-        builder.AppendLine( "get-screenshots -\tTake screenshots of all sites" );
-        builder.AppendLine( "check-for-changes -\tTake screenshots of all sites and compare with previous versions" );
+        builder.AppendLine( "help - Show List of available commands" );
+        builder.AppendLine( "get-screenshots - Take screenshots of all sites" );
+        builder.AppendLine( "check-for-changes - Take screenshots of all sites and compare with previous versions" );
 
         return builder.ToString();
     }

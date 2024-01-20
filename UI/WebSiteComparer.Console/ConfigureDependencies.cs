@@ -33,6 +33,8 @@ public static class ConfigureDependencies
             throw new ArgumentException( $"Couldn't get configuration: {nameof( WebSiteComparerConfiguration )}" );
         }
 
+        websiteComparerConfig.Validate();
+
         services.AddWebSiteComparer( websiteComparerConfig );
         services.AddWebSiteComparerUseCases();
     }

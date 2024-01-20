@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using WebSiteComparer.Console.Commands;
+using WebSiteComparer.Console.Utils;
 using WebSiteComparer.Core;
 
 namespace WebSiteComparer.Console;
@@ -45,9 +46,16 @@ public class WebSiteComparerApplication
         _logger.Log( LogLevel.Information, "Completed" );
     }
 
-    private static CommandType ParseActionType( string[] args )
+    private CommandType ParseActionType( string[] args )
     {
-        // return ArgumentsHandler.Parse( args );
-        return CommandType.UpdateScreenshots;
+        try
+        {
+            return ArgumentsHandler.Parse( args );
+        }
+        catch ( Exception )
+        {
+            _logger.Log( LogLevel.Information, $"Couldn't parse command type. {CommandType.NeedHelp} is used instead" );
+            return CommandType.NeedHelp;
+        }
     }
 }

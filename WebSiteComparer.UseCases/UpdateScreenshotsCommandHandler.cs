@@ -31,28 +31,8 @@ public class UpdateScreenshotsCommandHandler
 
         foreach ( ( Uri url, CashedBitmap? image ) in screenshots )
         {
-            if ( image is null )
-            {
-                _logger.Log( LogLevel.Warning, $"Couldn't save a screenshot because it doesn't exist\nUrl: {url}" );
-                continue;
-            }
-
-            _screenshotRepository.Save( image, UrlToFilePath( url ) );
+            _logger.Log( LogLevel.Information, $"Saving a screenshot\nUrl: {url}" );
+            _screenshotRepository.Save( image, url );
         }
-    }
-
-    private static string UrlToFilePath( Uri uri )
-    {
-        StringBuilder result = new StringBuilder( uri.Host + uri.PathAndQuery + uri.Fragment )
-            .Replace( '/', '_' )
-            .Replace( '.', '_' )
-            .Replace( '-', '_' );
-
-        if ( result[^1] == '_' )
-        {
-            result = result.Remove( result.Length - 1, 1 );
-        }
-
-        return result.ToString();
     }
 }

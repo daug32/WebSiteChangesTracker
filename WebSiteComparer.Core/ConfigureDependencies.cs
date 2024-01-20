@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Libs.ImageProcessing;
 using Libs.ImageProcessing.Implementation.Comparing;
-using WebSiteComparer.Core.ChangesTracker.Implementation;
+using WebSiteComparer.Core.ChangesTracking;
+using WebSiteComparer.Core.ChangesTracking.Implementation;
 using WebSiteComparer.Core.Screenshots;
 using WebSiteComparer.Core.Screenshots.Implementation;
 
@@ -17,7 +18,7 @@ public static class ConfigureDependencies
 
         services.AddScoped<IScreenshotTaker, ScreenshotTaker>();
         services.AddScoped<IScreenshotRepository, ScreenshotsRepository>();
-        services.AddScoped<IWebSitesViewChangesTracker, WebSitesViewChangesTracker>();
+        services.AddScoped<IChangesTracker, ChangesTracker>();
             
         services.AddScoped<IImageComparer, CashedBitmapComparer>();
 

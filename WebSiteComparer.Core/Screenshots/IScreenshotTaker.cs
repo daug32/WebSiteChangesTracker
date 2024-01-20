@@ -8,7 +8,7 @@ namespace WebSiteComparer.Core.Screenshots;
 
 public interface IScreenshotTaker
 {
-    public Task<Dictionary<Uri, CashedBitmap?>> TakeScreenshotAsync( IEnumerable<ScreenshotOptions> allScreenshotOptions );
+    public Task<Dictionary<Uri, CashedBitmap>> TakeScreenshotAsync( IEnumerable<ScreenshotOptions> allScreenshotOptions );
 
     public Task<CashedBitmap> TakeScreenshotAsync( ScreenshotOptions options );
 

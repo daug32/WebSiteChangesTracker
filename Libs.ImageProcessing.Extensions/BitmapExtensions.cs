@@ -15,6 +15,11 @@ public static class BitmapExtensions
         return await CashedBitmap.CreateAsync( await getBitmapTask );
     }
 
+    public static Task<CashedBitmap> ToCashedBitmapAsync( this Bitmap bitmap )
+    {
+        return CashedBitmap.CreateAsync( bitmap );
+    }
+
     public static async Task<CashedBitmap> ToCashedBitmapAsync( this Task<byte[]> getArrayTask )
     {
         return await CashedBitmap.CreateAsync(

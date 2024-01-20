@@ -22,11 +22,11 @@ internal class ScreenshotTaker : IScreenshotTaker
         _logger = logger;
     }
 
-    public async Task<Dictionary<Uri, CashedBitmap?>> TakeScreenshotAsync( IEnumerable<ScreenshotOptions> allScreenshotOptions )
+    public async Task<Dictionary<Uri, CashedBitmap>> TakeScreenshotAsync( IEnumerable<ScreenshotOptions> allScreenshotOptions )
     {
         IBrowser browser = await BrowserFactory.GetBrowserAsync();
         
-        var concurrentDictionary = new ConcurrentDictionary<Uri, CashedBitmap?>();
+        var concurrentDictionary = new ConcurrentDictionary<Uri, CashedBitmap>();
         await Parallel.ForEachAsync(
             allScreenshotOptions,
             async ( options, _ ) =>
