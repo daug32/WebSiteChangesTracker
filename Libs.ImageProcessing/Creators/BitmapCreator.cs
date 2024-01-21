@@ -3,9 +3,9 @@ using System.IO;
 using Libs.ImageProcessing.Implementation;
 using Libs.ImageProcessing.Implementation.Utils;
 
-namespace Libs.ImageProcessing;
+namespace Libs.ImageProcessing.Creators;
 
-public static class BitmapBuilder
+public static partial class BitmapCreator
 {
     public static Bitmap CreateFromByteArray( byte[] byteArray )
     {
@@ -35,7 +35,7 @@ public static class BitmapBuilder
         {
             return bitmap;
         }
-            
+
         Bitmap convertedBitmap = BitmapHelper.ConvertBitmapTo24RgbFormat( bitmap );
         bitmap.Dispose();
 

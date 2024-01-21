@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using Libs.ImageProcessing.Creators;
 using Libs.ImageProcessing.Models;
 
 namespace Libs.ImageProcessing.Extensions;
@@ -11,8 +12,8 @@ public static class IImageComparerExtensions
         Bitmap firstImage,
         Bitmap secondImage )
     {
-        Task<CashedBitmap> createFirstImageTask = CashedBitmap.CreateAsync( firstImage );
-        Task<CashedBitmap> createSecondImageTask = CashedBitmap.CreateAsync( secondImage );
+        Task<CashedBitmap> createFirstImageTask = CashedBitmapCreator.CreateAsync( firstImage );
+        Task<CashedBitmap> createSecondImageTask = CashedBitmapCreator.CreateAsync( secondImage );
 
         return await comparer.CompareAsync(
             await createFirstImageTask,
@@ -24,8 +25,8 @@ public static class IImageComparerExtensions
         string pathToFirstImage,
         string pathToSecondImage )
     {
-        Task<CashedBitmap> createFirstImageTask = CashedBitmap.CreateAsync( pathToFirstImage );
-        Task<CashedBitmap> createSecondImageTask = CashedBitmap.CreateAsync( pathToSecondImage );
+        Task<CashedBitmap> createFirstImageTask = CashedBitmapCreator.CreateAsync( pathToFirstImage );
+        Task<CashedBitmap> createSecondImageTask = CashedBitmapCreator.CreateAsync( pathToSecondImage );
 
         return await comparer.CompareAsync(
             await createFirstImageTask,

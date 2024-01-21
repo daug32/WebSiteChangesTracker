@@ -3,6 +3,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Libs.ImageProcessing;
+using Libs.ImageProcessing.Creators;
 using Libs.ImageProcessing.Extensions;
 using Libs.ImageProcessing.Models;
 using Libs.Microsoft.Playwright;
@@ -15,6 +17,13 @@ namespace WebSiteComparer.Core.Implementation.Screenshots;
 
 internal class ScreenshotTaker : IScreenshotTaker
 {
+    private static readonly PageScreenshotOptions _pageScreenshotOptions = new()
+    {
+        FullPage = true,
+        Type = ScreenshotType.Png,
+        Animations = ScreenshotAnimations.Disabled
+    };
+    
     private readonly ILogger _logger;
 
     public ScreenshotTaker( ILogger<ScreenshotTaker> logger )
@@ -68,14 +77,8 @@ internal class ScreenshotTaker : IScreenshotTaker
         Log( LogLevel.Information, "Creating a screenshot", options.Uri );
         try
         {
-            return await page
-                .ScreenshotAsync( new PageScreenshotOptions
-                {
-                    FullPage = true,
-                    Type = ScreenshotType.Png,
-                    Animations = ScreenshotAnimations.Disabled
-                } )
-                .ToCashedBitmapAsync();
+            return await CashedBitmapCreator.CreateAsync( 
+                await page.ScreenshotAsync( _pageScreenshotOptions ) );
         }
         catch ( Exception ex )
         {

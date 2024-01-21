@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using Libs.ImageProcessing.Creators;
 using NUnit.Framework;
 using Libs.ImageProcessing.Models;
 
@@ -14,17 +15,17 @@ public class CashedBitmapTests
     private readonly Color _testBitmapColor = Color.Blue;
 
     [Test]
-    public void CreateAsync_CreateForBigBitmap_DoesntThrow()
+    public async Task CreateAsync_CreateForBigBitmap_DoesntThrow()
     {
-        Assert.DoesNotThrow( () => CashedBitmap.CreateAsync( BitmapBuilder.CreateEmpty( BigWidth, BigHeight ) ).Wait() );
+        Assert.DoesNotThrowAsync( async () => await CashedBitmapCreator.CreateAsync( BitmapCreator.CreateEmpty( BigWidth, BigHeight ) ) );
     }
 
     [Test]
     public async Task CreateAsync_CreateThreeCashedBitmapsForBigBitmaps_AsynchronousCreatingOfCashedBitmaps()
     {
-        Task<CashedBitmap> a = CashedBitmap.CreateAsync( BitmapBuilder.CreateEmpty( BigWidth, BigHeight ) );
-        Task<CashedBitmap> b = CashedBitmap.CreateAsync( BitmapBuilder.CreateEmpty( BigWidth, BigHeight ) );
-        Task<CashedBitmap> c = CashedBitmap.CreateAsync( BitmapBuilder.CreateEmpty( BigWidth, BigHeight ) );
+        Task<CashedBitmap> a = CashedBitmapCreator.CreateAsync( BitmapCreator.CreateEmpty( BigWidth, BigHeight ) );
+        Task<CashedBitmap> b = CashedBitmapCreator.CreateAsync( BitmapCreator.CreateEmpty( BigWidth, BigHeight ) );
+        Task<CashedBitmap> c = CashedBitmapCreator.CreateAsync( BitmapCreator.CreateEmpty( BigWidth, BigHeight ) );
 
         await Task.WhenAll( a, b, c );
     }
@@ -128,7 +129,7 @@ public class CashedBitmapTests
 
     private Task<CashedBitmap> CreateTestCashedBitmapAsync()
     {
-        Bitmap? bitmap = BitmapBuilder.CreateEmpty( TestBitmapWidth, TestBitmapHeight );
+        Bitmap? bitmap = BitmapCreator.CreateEmpty( TestBitmapWidth, TestBitmapHeight );
 
         for ( var y = 0; y < TestBitmapHeight; y++ )
         {
@@ -138,6 +139,6 @@ public class CashedBitmapTests
             }
         }
 
-        return CashedBitmap.CreateAsync( bitmap );
+        return CashedBitmapCreator.CreateAsync( bitmap );
     }
 }

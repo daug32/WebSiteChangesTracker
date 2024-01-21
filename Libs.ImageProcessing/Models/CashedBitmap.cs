@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Threading.Tasks;
 using Libs.ImageProcessing.Implementation;
 using Libs.ImageProcessing.Implementation.Utils;
-using Libs.ImageProcessing.Implementation.Extensions;
 
 namespace Libs.ImageProcessing.Models;
 
@@ -20,44 +18,13 @@ public class CashedBitmap : IDisposable
 
     public Size Size => _data.Size;
 
-    #region Ctors
-        
-    public static Task<CashedBitmap> CreateAsync( string file )
+    internal CashedBitmap( Bitmap sourceBitmap, List<Color> data )
     {
-        return CreateAsync( BitmapBuilder.CreateFromFile( file ) );
-    }
-
-    // ReSharper disable once UnusedMember.Global
-    public static CashedBitmap CreateEmpty( int width, int height )
-    {
-        var data = new List<Color>( width * height );
-        for ( var i = 0; i < width * height; i++ )
-        {
-            data.Add( Color.White );
-        }
-            
-        return new CashedBitmap( 
-            new Bitmap( width, height, Constants.SupportedPixelFormat ),
-            data );
-    }
-
-    public static async Task<CashedBitmap> CreateAsync( Bitmap bitmap )
-    {
-        ValidateBitmapOrThrow( bitmap );
-        List<Color> data = await bitmap.GetPixelArrayAsync();
-        return new CashedBitmap( bitmap, data );
-    }
-
-    private CashedBitmap( Bitmap sourceBitmap, List<Color> data )
-    {
+        ValidateBitmapOrThrow( sourceBitmap );
         SourceBitmap = sourceBitmap;
         _data = new Map<Color>( sourceBitmap.Width, sourceBitmap.Height, data );
     }
 
-    #endregion
-        
-    #region Data access
-    
     public Color GetPixel( int x, int y )
     {
         return _data.Get( x, y );
@@ -81,10 +48,6 @@ public class CashedBitmap : IDisposable
     {
         _data.ForEach( func );   
     }
-        
-    #endregion Data access
-        
-    #region Other
 
     public void Resize( Size newSize, Color? defaultColor = null )
     {
@@ -131,10 +94,6 @@ public class CashedBitmap : IDisposable
         SourceBitmap.Dispose();
     }
         
-    #endregion Other
-
-    #region Private methods
-        
     internal void CommitChangesIfNeed()
     {
         if ( _wasResized )
@@ -158,7 +117,4 @@ public class CashedBitmap : IDisposable
             throw new BadImageFormatException();
         }
     }
-        
-    #endregion Private methods
-    
 }

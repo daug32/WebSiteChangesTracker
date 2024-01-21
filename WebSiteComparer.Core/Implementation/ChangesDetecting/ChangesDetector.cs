@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Libs.ImageProcessing;
+using Libs.ImageProcessing.Creators;
 using Libs.ImageProcessing.Extensions;
 using Libs.ImageProcessing.Models;
 using Libs.Microsoft.Playwright.Factories;
@@ -86,10 +87,8 @@ internal class ChangesDetector : IChangesDetector
 
         _logger.Log( LogLevel.Information, $"Loading old screenshot\nUrl: {uri}" );
         CashedBitmap oldState = imagePath is null
-            ? CashedBitmap.CreateEmpty( newState.Size.Width, newState.Size.Height )
-            : await BitmapBuilder
-                .CreateFromFile( imagePath )
-                .ToCashedBitmapAsync();
+            ? CashedBitmapCreator.CreateEmpty( newState.Size.Width, newState.Size.Height )
+            : await CashedBitmapCreator.CreateAsync( imagePath );
 
         _logger.Log( LogLevel.Information, $"Comparing images\nUrl: {uri}" );
         ImageComparingResult result = await _imageComparer.CompareAsync( oldState, newState );

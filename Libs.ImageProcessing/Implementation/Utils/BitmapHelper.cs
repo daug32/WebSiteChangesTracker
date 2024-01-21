@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using Libs.ImageProcessing.Creators;
 
 namespace Libs.ImageProcessing.Implementation.Utils;
 
@@ -6,7 +7,7 @@ internal static class BitmapHelper
 {
     public static Bitmap Resize( Image bitmap, Size newSize )
     {
-        Bitmap clone = BitmapBuilder.CreateEmpty( newSize.Width, newSize.Height );
+        Bitmap clone = BitmapCreator.CreateEmpty( newSize.Width, newSize.Height );
 
         using ( Graphics graphics = Graphics.FromImage( clone ) )
         {
@@ -25,7 +26,7 @@ internal static class BitmapHelper
         int height = bitmap.Height;
         int width = bitmap.Width;
 
-        Bitmap clone = BitmapBuilder.CreateEmpty( width, height );
+        Bitmap clone = BitmapCreator.CreateEmpty( width, height );
 
         using ( Graphics graphics = Graphics.FromImage( clone ) )
         {

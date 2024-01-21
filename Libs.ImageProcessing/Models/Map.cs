@@ -23,7 +23,6 @@ public class Map<T>
         _data = data.ToArray();
     }
 
-    // ReSharper disable once UnusedMember.Global
     public T GetByOffset( int index )
     {
         if ( index < 0 || index >= _data.Length )

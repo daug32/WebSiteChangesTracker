@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using Libs.ImageProcessing.Creators;
 using Libs.ImageProcessing.Models;
 
 namespace Libs.ImageProcessing.Tests.Utils;
@@ -7,8 +8,8 @@ public class BitmapHelper
 {
     public static async Task<CashedBitmap> CreateCashedBitmapByColorMatrix( Color[][] matrix )
     {
-        Bitmap bitmap = CreateBitmapByColorMatrix( matrix );
-        return await CashedBitmap.CreateAsync( bitmap );
+        return await CashedBitmapCreator.CreateAsync( 
+            CreateBitmapByColorMatrix( matrix ) );
     }
 
     private static Bitmap CreateBitmapByColorMatrix( Color[][] matrix )
@@ -18,7 +19,7 @@ public class BitmapHelper
             ? matrix[0].Length
             : 0;
 
-        Bitmap bitmap = BitmapBuilder.CreateEmpty( width, height );
+        Bitmap bitmap = BitmapCreator.CreateEmpty( width, height );
 
         for ( var y = 0; y < height; y++ )
         {
