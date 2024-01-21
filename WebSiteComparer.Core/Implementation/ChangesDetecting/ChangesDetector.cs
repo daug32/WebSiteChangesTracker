@@ -13,7 +13,7 @@ using WebSiteComparer.Core.ChangesTracking;
 using WebSiteComparer.Core.Implementation.Extensions;
 using WebSiteComparer.Core.Screenshots;
 
-namespace WebSiteComparer.Core.Implementation.ChangesTracking;
+namespace WebSiteComparer.Core.Implementation.ChangesDetecting;
 
 internal class ChangesDetector : IChangesDetector
 {

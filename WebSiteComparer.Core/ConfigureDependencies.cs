@@ -2,7 +2,7 @@
 using Libs.ImageProcessing;
 using Libs.ImageProcessing.Implementation.Comparing;
 using WebSiteComparer.Core.ChangesTracking;
-using WebSiteComparer.Core.Implementation.ChangesTracking;
+using WebSiteComparer.Core.Implementation.ChangesDetecting;
 using WebSiteComparer.Core.Implementation.Screenshots;
 using WebSiteComparer.Core.Screenshots;
 
