@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using WebSiteComparer.Console.Commands.Implementation;
-using WebSiteComparer.Core.ChangesTracking;
 using WebSiteComparer.UseCases;
 using FindChangesCommand = WebSiteComparer.Console.Commands.Implementation.FindChangesCommand;
 using UpdateScreenshotsCommand = WebSiteComparer.Console.Commands.Implementation.UpdateScreenshotsCommand;

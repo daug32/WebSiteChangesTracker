@@ -1,13 +1,12 @@
-﻿namespace Libs.ImageProcessing.Models
+﻿namespace Libs.ImageProcessing.Models;
+
+public class ImageComparingResult
 {
-    public class ImageComparingResult
-    {
-        public CashedBitmap Bitmap { get; set; }
+    public CashedBitmap Bitmap { get; set; }
         
-        public long ChangesNumber { get; set; }
+    public long ChangesNumber { get; set; }
         
-        public float PercentOfChanges => 100f * ChangesNumber / Bitmap.Size.Height / Bitmap.Size.Width;
+    public float PercentOfChanges => 100f * ChangesNumber / Bitmap.Size.Height / Bitmap.Size.Width;
         
-        public bool HasChanges => ChangesNumber > 0;
-    }
+    public bool HasChanges => ChangesNumber > 0;
 }

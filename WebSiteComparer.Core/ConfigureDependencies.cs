@@ -14,7 +14,7 @@ public static class ConfigureDependencies
         this IServiceCollection services,
         WebSiteComparerConfiguration configuration )
     {
-        services.AddSingleton<WebSiteComparerConfiguration>( configuration );
+        services.AddSingleton( configuration );
 
         services.AddScoped<IScreenshotTaker, ScreenshotTaker>();
         services.AddScoped<IScreenshotRepository, ScreenshotsRepository>();

@@ -3,43 +3,42 @@ using System.IO;
 using Libs.ImageProcessing.Implementation;
 using Libs.ImageProcessing.Implementation.Utils;
 
-namespace Libs.ImageProcessing
+namespace Libs.ImageProcessing;
+
+public static class BitmapBuilder
 {
-    public static class BitmapBuilder
+    public static Bitmap CreateFromByteArray( byte[] byteArray )
     {
-        public static Bitmap CreateFromByteArray( byte[] byteArray )
+        Bitmap bitmap;
+        using ( var ms = new MemoryStream( byteArray ) )
         {
-            Bitmap bitmap;
-            using ( var ms = new MemoryStream( byteArray ) )
-            {
-                bitmap = Image.FromStream( ms ) as Bitmap;
-            }
-
-            return Standardize( bitmap );
+            bitmap = Image.FromStream( ms ) as Bitmap;
         }
 
-        public static Bitmap CreateFromFile( string file )
-        {
-            var bitmap = new Bitmap( file );
-            return Standardize( bitmap );
-        }
+        return Standardize( bitmap );
+    }
 
-        public static Bitmap CreateEmpty( int width, int height )
-        {
-            return new Bitmap( width, height, Constants.SupportedPixelFormat );
-        }
+    public static Bitmap CreateFromFile( string file )
+    {
+        var bitmap = new Bitmap( file );
+        return Standardize( bitmap );
+    }
 
-        private static Bitmap Standardize( Bitmap bitmap )
+    public static Bitmap CreateEmpty( int width, int height )
+    {
+        return new Bitmap( width, height, Constants.SupportedPixelFormat );
+    }
+
+    private static Bitmap Standardize( Bitmap bitmap )
+    {
+        if ( bitmap.PixelFormat == Constants.SupportedPixelFormat )
         {
-            if ( bitmap.PixelFormat == Constants.SupportedPixelFormat )
-            {
-                return bitmap;
-            }
+            return bitmap;
+        }
             
-            Bitmap convertedBitmap = BitmapHelper.ConvertBitmapTo24RgbFormat( bitmap );
-            bitmap.Dispose();
+        Bitmap convertedBitmap = BitmapHelper.ConvertBitmapTo24RgbFormat( bitmap );
+        bitmap.Dispose();
 
-            return convertedBitmap;
-        }
+        return convertedBitmap;
     }
 }

@@ -4,69 +4,68 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
 
-namespace Libs.ImageProcessing.Implementation.Extensions
+namespace Libs.ImageProcessing.Implementation.Extensions;
+
+internal static class BitmapExtension
 {
-    internal static class BitmapExtension
+    private const PixelFormat SupportedPixelFormat = Constants.SupportedPixelFormat;
+
+    public static Task<List<Color>> GetPixelArrayAsync( this Bitmap bitmap )
     {
-        private const PixelFormat SupportedPixelFormat = Constants.SupportedPixelFormat;
-
-        public static Task<List<Color>> GetPixelArrayAsync( this Bitmap bitmap )
+        if ( bitmap == null )
         {
-            if ( bitmap == null )
-            {
-                throw new NullReferenceException();
-            }
-
-            return Task.Run( bitmap.GetPixelArrayInternal );
+            throw new NullReferenceException();
         }
 
-        private static BitmapData LockAllBits(
-            this Bitmap bitmap,
-            ImageLockMode lockMode,
-            PixelFormat pixelFormat )
+        return Task.Run( bitmap.GetPixelArrayInternal );
+    }
+
+    private static BitmapData LockAllBits(
+        this Bitmap bitmap,
+        ImageLockMode lockMode,
+        PixelFormat pixelFormat )
+    {
+        var fullImageRectangle = new Rectangle(
+            0,
+            0,
+            bitmap.Width,
+            bitmap.Height );
+
+        return bitmap.LockBits(
+            fullImageRectangle,
+            lockMode,
+            pixelFormat );
+    }
+
+    private static unsafe List<Color> GetPixelArrayInternal( this Bitmap bitmap )
+    {
+        int width = bitmap.Width;
+        int height = bitmap.Height;
+
+        var result = new List<Color>( height * width );
+
+        BitmapData data = bitmap.LockAllBits( ImageLockMode.ReadOnly, SupportedPixelFormat );
+
+        var source = ( byte* )data.Scan0.ToPointer();
+
+        for ( var y = 0; y < height; y++ )
         {
-            var fullImageRectangle = new Rectangle(
-                0,
-                0,
-                bitmap.Width,
-                bitmap.Height );
-
-            return bitmap.LockBits(
-                fullImageRectangle,
-                lockMode,
-                pixelFormat );
-        }
-
-        private static unsafe List<Color> GetPixelArrayInternal( this Bitmap bitmap )
-        {
-            int width = bitmap.Width;
-            int height = bitmap.Height;
-
-            var result = new List<Color>( height * width );
-
-            BitmapData data = bitmap.LockAllBits( ImageLockMode.ReadOnly, SupportedPixelFormat );
-
-            var source = ( byte* )data.Scan0.ToPointer();
-
-            for ( var y = 0; y < height; y++ )
+            int rowIndex = y * data.Stride;
+            for ( var x = 0; x < width; x++ )
             {
-                int rowIndex = y * data.Stride;
-                for ( var x = 0; x < width; x++ )
-                {
-                    int pos = rowIndex + x * 3;
+                int pos = rowIndex + x * 3;
 
-                    Color color = Color.FromArgb(
-                        source[pos + 2],
-                        source[pos + 1],
-                        source[pos] );
+                Color color = Color.FromArgb(
+                    source[pos + 2],
+                    source[pos + 1],
+                    source[pos] );
 
-                    result.Add( color );
-                }
+                result.Add( color );
             }
+        }
             
-            bitmap.UnlockBits( data );
+        bitmap.UnlockBits( data );
 
-            return result;
-        }
+        return result;
     }
 }

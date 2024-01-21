@@ -1,44 +1,43 @@
 ﻿using System.Drawing;
 
-namespace Libs.ImageProcessing.Implementation.Utils
+namespace Libs.ImageProcessing.Implementation.Utils;
+
+internal static class BitmapHelper
 {
-    internal static class BitmapHelper
+    public static Bitmap Resize( Image bitmap, Size newSize )
     {
-        public static Bitmap Resize( Image bitmap, Size newSize )
+        Bitmap clone = BitmapBuilder.CreateEmpty( newSize.Width, newSize.Height );
+
+        using ( Graphics graphics = Graphics.FromImage( clone ) )
         {
-            Bitmap clone = BitmapBuilder.CreateEmpty( newSize.Width, newSize.Height );
+            var fullScreenRectangle = new Rectangle(
+                Point.Empty,
+                newSize );
 
-            using ( Graphics graphics = Graphics.FromImage( clone ) )
-            {
-                var fullScreenRectangle = new Rectangle(
-                    Point.Empty,
-                    newSize );
-
-                graphics.DrawImage( bitmap, fullScreenRectangle );
-            }
-
-            return clone;
+            graphics.DrawImage( bitmap, fullScreenRectangle );
         }
 
-        public static Bitmap ConvertBitmapTo24RgbFormat( Image bitmap )
+        return clone;
+    }
+
+    public static Bitmap ConvertBitmapTo24RgbFormat( Image bitmap )
+    {
+        int height = bitmap.Height;
+        int width = bitmap.Width;
+
+        Bitmap clone = BitmapBuilder.CreateEmpty( width, height );
+
+        using ( Graphics graphics = Graphics.FromImage( clone ) )
         {
-            int height = bitmap.Height;
-            int width = bitmap.Width;
+            var fullScreenRectangle = new Rectangle(
+                0,
+                0,
+                width,
+                height );
 
-            Bitmap clone = BitmapBuilder.CreateEmpty( width, height );
-
-            using ( Graphics graphics = Graphics.FromImage( clone ) )
-            {
-                var fullScreenRectangle = new Rectangle(
-                    0,
-                    0,
-                    width,
-                    height );
-
-                graphics.DrawImage( bitmap, fullScreenRectangle );
-            }
-
-            return clone;
+            graphics.DrawImage( bitmap, fullScreenRectangle );
         }
+
+        return clone;
     }
 }

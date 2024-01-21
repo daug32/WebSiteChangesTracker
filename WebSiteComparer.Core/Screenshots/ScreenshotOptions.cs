@@ -8,8 +8,13 @@ public class ScreenshotOptions
     public int Width { get; }
 
     public ScreenshotOptions( string uri, int width )
+        : this( new Uri( uri ), width )
     {
-        Uri = new Uri( uri );
+    }
+
+    public ScreenshotOptions( Uri uri, int width )
+    {
+        Uri = uri;
         Width = width < 1
             ? throw new ArgumentException( nameof( width ) )
             : width;

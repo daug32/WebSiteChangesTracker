@@ -1,9 +1,8 @@
 ﻿using System.Drawing.Imaging;
 
-namespace Libs.ImageProcessing.Implementation
+namespace Libs.ImageProcessing.Implementation;
+
+internal class Constants
 {
-    internal class Constants
-    {
-        public const PixelFormat SupportedPixelFormat = PixelFormat.Format24bppRgb;
-    }
+    public const PixelFormat SupportedPixelFormat = PixelFormat.Format24bppRgb;
 }

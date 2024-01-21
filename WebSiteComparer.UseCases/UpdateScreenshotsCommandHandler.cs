@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Libs.ImageProcessing.Models;
+﻿using Libs.ImageProcessing.Models;
 using Microsoft.Extensions.Logging;
 using WebSiteComparer.Core.Screenshots;
 
