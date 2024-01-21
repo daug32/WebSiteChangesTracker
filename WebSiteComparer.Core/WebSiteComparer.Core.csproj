@@ -14,9 +14,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Libs.ImageProcessing.Extensions\Libs.ImageProcessing.Extensions.csproj" />
-      <ProjectReference Include="..\Libs.ImageProcessing\Libs.ImageProcessing.csproj" />
-      <ProjectReference Include="..\Libs.Microsoft.Playwright\Libs.Microsoft.Playwright.csproj" />
+      <ProjectReference Include="..\Libs\Libs.ImageProcessing.Extensions\Libs.ImageProcessing.Extensions.csproj" />
+      <ProjectReference Include="..\Libs\Libs.ImageProcessing\Libs.ImageProcessing.csproj" />
+      <ProjectReference Include="..\Libs\Libs.Microsoft.Playwright\Libs.Microsoft.Playwright.csproj" />
     </ItemGroup>
 
 </Project>

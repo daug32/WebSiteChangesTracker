@@ -7,6 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Libs\Libs.ImageProcessing.Extensions\Libs.ImageProcessing.Extensions.csproj" />
+      <ProjectReference Include="..\Libs\Libs.ImageProcessing\Libs.ImageProcessing.csproj" />
       <ProjectReference Include="..\WebSiteComparer.Core\WebSiteComparer.Core.csproj" />
     </ItemGroup>
 
