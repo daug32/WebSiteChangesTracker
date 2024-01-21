@@ -81,7 +81,7 @@ public class Map<T>
             y < Size.Height;
     }
 
-    public void Resize( Size newSize, T defaultValue = default )
+    public void Resize( Size newSize, T defaultValue )
     {
         if ( newSize.Width < 0 || newSize.Height < 0 )
         {

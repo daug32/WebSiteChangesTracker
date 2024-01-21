@@ -24,17 +24,14 @@ public class CashedBitmapComparer : IImageComparer
 
         firstImage.Resize( new Size( maxWidth, maxHeight ), Color.Red );
 
-        var result = new ImageComparingResult
-        {
-            Bitmap = firstImage
-        };
+        var changesNumber = 0;
 
         firstImage.UpdateEach(
             ( x, y, firstImageColor ) =>
             {
                 if ( !secondImage.ContainsPoint( x, y ) )
                 {
-                    result.ChangesNumber++;
+                    changesNumber++;
                     return firstImageColor;
                 }
 
@@ -44,10 +41,10 @@ public class CashedBitmapComparer : IImageComparer
                     return firstImageColor.ToMonochrome();
                 }
 
-                result.ChangesNumber++;
+                changesNumber++;
                 return firstImageColor.ToRedColor();
             } );
 
-        return result;
+        return new ImageComparingResult( firstImage, changesNumber );
     }
 }

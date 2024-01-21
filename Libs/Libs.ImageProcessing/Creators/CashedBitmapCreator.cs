@@ -6,7 +6,7 @@ using Libs.ImageProcessing.Models;
 
 namespace Libs.ImageProcessing.Creators;
 
-public static partial class CashedBitmapCreator
+public static class CashedBitmapCreator
 {
     public static Task<CashedBitmap> CreateAsync( byte[] byteArray )
     {

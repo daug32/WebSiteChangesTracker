@@ -15,9 +15,10 @@ public class CashedBitmapTests
     private readonly Color _testBitmapColor = Color.Blue;
 
     [Test]
-    public async Task CreateAsync_CreateForBigBitmap_DoesntThrow()
+    public Task CreateAsync_CreateForBigBitmap_DoesntThrow()
     {
         Assert.DoesNotThrowAsync( async () => await CashedBitmapCreator.CreateAsync( BitmapCreator.CreateEmpty( BigWidth, BigHeight ) ) );
+        return Task.CompletedTask;
     }
 
     [Test]
@@ -129,7 +130,7 @@ public class CashedBitmapTests
 
     private Task<CashedBitmap> CreateTestCashedBitmapAsync()
     {
-        Bitmap? bitmap = BitmapCreator.CreateEmpty( TestBitmapWidth, TestBitmapHeight );
+        Bitmap bitmap = BitmapCreator.CreateEmpty( TestBitmapWidth, TestBitmapHeight );
 
         for ( var y = 0; y < TestBitmapHeight; y++ )
         {

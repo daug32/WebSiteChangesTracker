@@ -16,19 +16,23 @@ public class MapTests
     [TestCaseSource( nameof( _validCtorData ) )]
     public void Ctor_ValidData_DoesntThrow( int width, int height, List<int> data )
     {
+        // ReSharper disable once ObjectCreationAsStatement
         Assert.DoesNotThrow( () => new Map<int>( width, height, data ) );
     }
 
     private static readonly object[] _invalidCtorData =
     {
         new object[] { 1, -1, new List<int>() { 1 } },
+#pragma warning disable CS8625
         new object[] { 1, 1, null },
+#pragma warning restore CS8625
         new object[] { 2, 3, new List<int>() { 1 } }
     };
 
     [TestCaseSource( nameof( _invalidCtorData ) )]
     public void Ctor_InvalidData_ThrowsArgumentException( int width, int height, List<int> data )
     {
+        // ReSharper disable once ObjectCreationAsStatement
         Assert.Throws<ArgumentException>( () => new Map<int>( width, height, data ) );
     }
 
@@ -157,7 +161,7 @@ public class MapTests
         var map = new Map<int>( 2, 2, new List<int>() { 0, 0, 0, 0 } );
 
         // Act
-        map.Resize( new Size( 1, 2 ) );
+        map.Resize( new Size( 1, 2 ), 0 );
 
         // Assert
         Assert.AreEqual( new Size( 1, 2 ), map.Size );
@@ -172,7 +176,7 @@ public class MapTests
         var map = new Map<int>( 2, 2, new List<int>() { 0, 0, 0, 0 } );
 
         // Act
-        map.Resize( new Size( 2, 1 ) );
+        map.Resize( new Size( 2, 1 ), 0 );
 
         // Assert
         Assert.AreEqual( new Size( 2, 1 ), map.Size );
@@ -187,7 +191,7 @@ public class MapTests
         var map = new Map<int>( 2, 2, new List<int>() { 0, 0, 0, 0 } );
 
         // Act
-        map.Resize( new Size( 1, 1 ) );
+        map.Resize( new Size( 1, 1 ), 0 );
 
         // Assert
         Assert.AreEqual( new Size( 1, 1 ), map.Size );

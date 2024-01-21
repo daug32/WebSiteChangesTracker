@@ -5,8 +5,6 @@ namespace WebSiteComparer.Console.Utils;
 
 internal static class ArgumentsHandler
 {
-    private const string HelpCommand = "help";
-
     public static string GetHelp()
     {
         var builder = new StringBuilder();

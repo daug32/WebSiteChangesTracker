@@ -1,18 +1,19 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.IO;
 using Libs.ImageProcessing.Implementation;
 using Libs.ImageProcessing.Implementation.Utils;
 
 namespace Libs.ImageProcessing.Creators;
 
-public static partial class BitmapCreator
+public static class BitmapCreator
 {
     public static Bitmap CreateFromByteArray( byte[] byteArray )
     {
         Bitmap bitmap;
         using ( var ms = new MemoryStream( byteArray ) )
         {
-            bitmap = Image.FromStream( ms ) as Bitmap;
+            bitmap = Image.FromStream( ms ) as Bitmap ?? throw new InvalidCastException();
         }
 
         return Standardize( bitmap );
