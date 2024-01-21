@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
+using Libs.ImageProcessing.Extensions;
 using NUnit.Framework;
 using Libs.ImageProcessing.Implementation.Comparing;
 using Libs.ImageProcessing.Models;

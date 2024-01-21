@@ -17,6 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Libs.ImageProcessing.Extensions\Libs.ImageProcessing.Extensions.csproj" />
       <ProjectReference Include="..\..\Libs.ImageProcessing\Libs.ImageProcessing.csproj" />
     </ItemGroup>
 

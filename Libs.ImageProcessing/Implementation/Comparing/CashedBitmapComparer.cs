@@ -8,30 +8,6 @@ namespace Libs.ImageProcessing.Implementation.Comparing;
 
 public class CashedBitmapComparer : IImageComparer
 {
-    public async Task<ImageComparingResult> CompareAsync(
-        string pathToFirstImage,
-        string pathToSecondImage )
-    {
-        Task<CashedBitmap> createFirstImageTask = CashedBitmap.CreateAsync( pathToFirstImage );
-        Task<CashedBitmap> createSecondImageTask = CashedBitmap.CreateAsync( pathToSecondImage );
-
-        return await CompareAsync(
-            await createFirstImageTask,
-            await createSecondImageTask );
-    }
-
-    public async Task<ImageComparingResult> CompareAsync(
-        Bitmap firstImage,
-        Bitmap secondImage )
-    {
-        Task<CashedBitmap> createFirstImageTask = CashedBitmap.CreateAsync( firstImage );
-        Task<CashedBitmap> createSecondImageTask = CashedBitmap.CreateAsync( secondImage );
-
-        return await CompareAsync(
-            await createFirstImageTask,
-            await createSecondImageTask );
-    }
-
     public Task<ImageComparingResult> CompareAsync(
         CashedBitmap firstImage,
         CashedBitmap secondImage )
