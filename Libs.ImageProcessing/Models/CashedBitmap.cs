@@ -18,7 +18,7 @@ public class CashedBitmap : IDisposable
 
     public Size Size => _data.Size;
 
-    internal CashedBitmap( Bitmap sourceBitmap, List<Color> data )
+    internal CashedBitmap( Bitmap sourceBitmap, ICollection<Color> data )
     {
         ValidateBitmapOrThrow( sourceBitmap );
         SourceBitmap = sourceBitmap;

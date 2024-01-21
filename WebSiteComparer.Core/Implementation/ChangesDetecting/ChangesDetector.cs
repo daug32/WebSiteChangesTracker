@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Libs.ImageProcessing;
 using Libs.ImageProcessing.Creators;
-using Libs.ImageProcessing.Extensions;
 using Libs.ImageProcessing.Models;
 using Libs.Microsoft.Playwright.Factories;
 using Microsoft.Extensions.Logging;

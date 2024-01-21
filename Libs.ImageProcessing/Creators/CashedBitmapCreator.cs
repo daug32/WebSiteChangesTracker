@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using Libs.ImageProcessing.Implementation.Extensions;
@@ -32,11 +32,8 @@ public static partial class CashedBitmapCreator
     {
         fillColor ??= Color.White;
 
-        var data = new List<Color>( width * height );
-        for ( var i = 0; i < width * height; i++ )
-        {
-            data.Add( fillColor.Value );
-        }
+        var data = new Color[width * height];
+        Array.Fill( data, fillColor.Value );
 
         return new CashedBitmap(
             BitmapCreator.CreateEmpty( width, height ),

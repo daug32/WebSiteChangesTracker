@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace Libs.ImageProcessing.Models;
 
@@ -12,7 +13,7 @@ public class Map<T>
     public Map( 
         int width, 
         int height,
-        List<T> data )
+        ICollection<T> data )
     {
         if ( data == null || data.Count != width * height )
         {
