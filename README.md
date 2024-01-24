@@ -9,7 +9,7 @@ Provides a console app to track changes at websites view<br/>
 ## Input
 To get all available commands type "help" into command line args
 ## Output
-![output](Images/output.png)
+<img src="./Images/output.png" width=600>
 
 ## Configurating
 Configure app and add your website settings.<br/>
