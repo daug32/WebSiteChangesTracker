@@ -20,11 +20,7 @@ public class WebSiteComparerApplication
     {
         _logger = logger;
         _commandBuilder = commandBuilder;
-
-        _websiteConfigurations = configuration
-                 .GetSection( "WebSites" )
-                 .Get<List<WebsiteConfiguration>>()
-             ?? throw new ArgumentException( "Configuration for Websites not found" );
+        _websiteConfigurations = GetWebsiteConfigurations( configuration );
     }
 
     public async Task StartAsync( string[] args )
@@ -57,5 +53,26 @@ public class WebSiteComparerApplication
             _logger.Log( LogLevel.Debug, $"Couldn't parse command type. {CommandType.NeedHelp} is used instead" );
             return CommandType.NeedHelp;
         }
+    }
+
+    private static List<WebsiteConfiguration> GetWebsiteConfigurations( IConfiguration configuration )
+    {
+        List<WebsiteConfiguration>? websiteConfigurations = configuration
+            .GetSection( "WebSites" )
+            .Get<List<WebsiteConfiguration>>();
+
+        if ( websiteConfigurations is null || !websiteConfigurations.Any() )
+        {
+            throw new ArgumentException(
+                "Value must not be null or empty",
+                nameof( websiteConfigurations ) );
+        }
+
+        foreach ( WebsiteConfiguration websiteConfiguration in websiteConfigurations )
+        {
+            WebsiteConfiguration.ValidateOrThrow( websiteConfiguration );
+        }
+
+        return websiteConfigurations;
     }
 }
