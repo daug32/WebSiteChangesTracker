@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using WebSiteComparer.Core;
 using WebSiteComparer.Core.ChangesTracking;
+using WebSiteComparer.Core.Configurations;
 
 namespace WebSiteComparer.UseCases;
 

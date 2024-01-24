@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace WebSiteComparer.Core;
+namespace WebSiteComparer.Core.Configurations;
 
 public class WebsiteConfiguration
 {
     public List<string> Urls { get; set; } = new();
-        
     public int ScreenshotWidth { get; set; } = 1280;
+    public PageLoadingConfiguration? PageLoadingConfiguration { get; set; } = null;
 
     public static void ValidateOrThrow( WebsiteConfiguration configuration )
     {

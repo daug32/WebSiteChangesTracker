@@ -10,6 +10,7 @@
   "profiles": {
     "WebSiteComparer.Console": {
       "commandName": "Project",
+      "commandLineArgs": "check-for-changes",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

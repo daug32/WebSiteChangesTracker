@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebSiteComparer.Core;
+namespace WebSiteComparer.Core.Configurations;
 
 public class WebSiteComparerConfiguration
 {

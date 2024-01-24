@@ -10,6 +10,7 @@ using Libs.Microsoft.Playwright.Factories;
 using Microsoft.Extensions.Logging;
 using Microsoft.Playwright;
 using WebSiteComparer.Core.ChangesTracking;
+using WebSiteComparer.Core.Configurations;
 using WebSiteComparer.Core.Implementation.Extensions;
 using WebSiteComparer.Core.Screenshots;
 
@@ -42,7 +43,10 @@ internal class ChangesDetector : IChangesDetector
     {
         var screenshotOptions = configurations
             .SelectMany( configuration => configuration.Urls
-                .Select( url => new ScreenshotOptions( url, configuration.ScreenshotWidth ) ) )
+                .Select( url => new ScreenshotOptions(
+                    new Uri( url ), 
+                    configuration.ScreenshotWidth,
+                    configuration.PageLoadingConfiguration ) ) )
             .ToList();
 
         return FindChangesInternalAsync( screenshotOptions );
@@ -51,7 +55,10 @@ internal class ChangesDetector : IChangesDetector
     public Task FindChangesAsync( WebsiteConfiguration configuration )
     {
         var screenshotOptions = configuration.Urls
-            .Select( url => new ScreenshotOptions( url, configuration.ScreenshotWidth ) )
+            .Select( url => new ScreenshotOptions( 
+                new Uri( url ),
+                configuration.ScreenshotWidth,
+                configuration.PageLoadingConfiguration ) )
             .ToList();
 
         return FindChangesInternalAsync( screenshotOptions );
@@ -73,7 +80,10 @@ internal class ChangesDetector : IChangesDetector
                 screenshotOptions,
                 async ( screenshotOption, _ ) =>
                 {
-                    IPage page = await browser.NewPageAsync();
+                    IPage page = await browser.NewPageAsync( 
+                        screenshotOption
+                            .PageLoadingConfiguration
+                            .ToPlaywrightPageOptions() );
                     CashedBitmap screenshot = await _screenshotTaker.TakeScreenshotAsync( page, screenshotOption );
 
                     await Task.WhenAll(
@@ -87,16 +97,16 @@ internal class ChangesDetector : IChangesDetector
     {
         string? imagePath = _screenshotRepository.Get( uri );
 
-        _logger.Log( LogLevel.Information, $"Loading old screenshot\nUrl: {uri}" );
+        _logger.Log( LogLevel.Debug, $"Loading old screenshot\nUrl: {uri}" );
         CashedBitmap oldState = imagePath is null
             ? CashedBitmapCreator.CreateEmpty( newState.Size.Width, newState.Size.Height )
             : await CashedBitmapCreator.CreateAsync( imagePath );
 
-        _logger.Log( LogLevel.Information, $"Comparing images\nUrl: {uri}" );
+        _logger.Log( LogLevel.Debug, $"Comparing images\nUrl: {uri}" );
         ImageComparingResult result = await _imageComparer.CompareAsync( oldState, newState );
 
         string path = BuildFilePath( result.PercentOfChanges, uri );
-        _logger.Log( LogLevel.Information, $"Comparing images\nPath: {path}\nUrl: {uri}" );
+        _logger.Log( LogLevel.Debug, $"Comparing images\nPath: {path}\nUrl: {uri}" );
         result.Bitmap.Save( path );
     }
 

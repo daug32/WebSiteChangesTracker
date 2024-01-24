@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebSiteComparer.Core.Configurations;
 
 namespace WebSiteComparer.Core.ChangesTracking;
 

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using WebSiteComparer.Console.Commands;
 using WebSiteComparer.Core;
+using WebSiteComparer.Core.Configurations;
 using WebSiteComparer.UseCases;
 
 namespace WebSiteComparer.Console;

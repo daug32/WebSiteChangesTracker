@@ -23,7 +23,11 @@ public class UpdateScreenshotsCommandHandler
     public async Task Handle( UpdateScreenshotsCommand command )
     {
         var options = command.Configurations
-            .SelectMany( config => config.Urls.Select( url => new ScreenshotOptions( url, config.ScreenshotWidth ) ) )
+            .SelectMany( configuration => configuration.Urls
+                .Select( url => new ScreenshotOptions( 
+                    new Uri( url ),
+                    configuration.ScreenshotWidth,
+                    configuration.PageLoadingConfiguration ) ) )
             .ToList();
 
         var screenshots = await _screenshotTaker.TakeScreenshotAsync( options );
