@@ -31,29 +31,38 @@ internal class ScreenshotTaker : IScreenshotTaker
 
     public async Task<Dictionary<Uri, CashedBitmap>> TakeScreenshotAsync( IEnumerable<ScreenshotOptions> allScreenshotOptions )
     {
-        IBrowser browser = await BrowserFactory.GetBrowserAsync();
-        
         var concurrentDictionary = new ConcurrentDictionary<Uri, CashedBitmap>();
-        await Parallel.ForEachAsync(
-            allScreenshotOptions,
-            async ( options, _ ) =>
-            {
-                IPage page = await browser.NewPageAsync();
-                concurrentDictionary.TryAdd( 
-                    options.Uri,
-                    await TakeScreenshotAsync( page, options ) );
-                await page.CloseAsync();
-            } );
+        await using ( var browserFactory = new BrowserFactory() )
+        {
+            IBrowser browser = await browserFactory.GetBrowserAsync();
 
+            await Parallel.ForEachAsync(
+                allScreenshotOptions,
+                async ( options, _ ) =>
+                {
+                    IPage page = await browser.NewPageAsync();
+                    concurrentDictionary.TryAdd(
+                        options.Uri,
+                        await TakeScreenshotAsync( page, options ) );
+
+                    await page.CloseAsync();
+                } );
+        }
+        
         return concurrentDictionary.ToDictionary( x => x.Key, x => x.Value );
     }
 
     public async Task<CashedBitmap> TakeScreenshotAsync( ScreenshotOptions options )
     {
-        IBrowser browser = await BrowserFactory.GetBrowserAsync();
-        IPage page = await browser.NewPageAsync();
-        CashedBitmap image = await TakeScreenshotAsync( page, options );
-        await page.CloseAsync();
+        CashedBitmap image;
+        await using ( var browserFactory = new BrowserFactory() )
+        {
+            IBrowser browser = await browserFactory.GetBrowserAsync();
+            IPage page = await browser.NewPageAsync();
+            image = await TakeScreenshotAsync( page, options );
+            await page.CloseAsync();
+        }
+
         return image;
     }
 

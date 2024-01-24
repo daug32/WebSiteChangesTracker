@@ -2,30 +2,28 @@
 
 namespace Libs.Microsoft.Playwright.Factories;
 
-public static class BrowserFactory
+public class BrowserFactory : IAsyncDisposable
 {
-    private static IBrowser? _browser;
+    private IBrowser? _browser;
 
-    public static async Task<IBrowser> GetBrowserAsync()
+    public async Task<IBrowser> GetBrowserAsync()
     {
         if ( _browser != null )
         {
             return _browser;
         }
 
-        var browserLaunchOptions = new BrowserTypeLaunchOptions
+        IPlaywright playwright = await global::Microsoft.Playwright.Playwright.CreateAsync();
+
+        _browser = await playwright.Chromium.LaunchAsync( new BrowserTypeLaunchOptions
         {
             Headless = true
-        };
-
-        IPlaywright playwright = await global::Microsoft.Playwright.Playwright.CreateAsync();
-        IBrowser browser = await playwright.Chromium.LaunchAsync( browserLaunchOptions );
-        _browser = browser;
+        } );
 
         return _browser;
     }
 
-    public static async Task DisposeAsync()
+    public async ValueTask DisposeAsync()
     {
         if ( _browser == null )
         {

@@ -65,19 +65,22 @@ internal class ChangesDetector : IChangesDetector
             directoryInfo.ClearDirectory();
         }
 
-        IBrowser browser = await BrowserFactory.GetBrowserAsync();
+        await using ( var browserFactory = new BrowserFactory() )
+        {
+            IBrowser browser = await browserFactory.GetBrowserAsync();
 
-        await Parallel.ForEachAsync(
-            screenshotOptions,
-            async ( screenshotOption, _ ) =>
-            {
-                IPage page = await browser.NewPageAsync();
-                CashedBitmap screenshot = await _screenshotTaker.TakeScreenshotAsync( page, screenshotOption );
-                
-                await Task.WhenAll(
-                    CompareToOldVersionAsync( screenshotOption.Uri, screenshot ),
-                    page.CloseAsync() );
-            } );
+            await Parallel.ForEachAsync(
+                screenshotOptions,
+                async ( screenshotOption, _ ) =>
+                {
+                    IPage page = await browser.NewPageAsync();
+                    CashedBitmap screenshot = await _screenshotTaker.TakeScreenshotAsync( page, screenshotOption );
+
+                    await Task.WhenAll(
+                        CompareToOldVersionAsync( screenshotOption.Uri, screenshot ),
+                        page.CloseAsync() );
+                } );
+        }
     }
 
     private async Task CompareToOldVersionAsync( Uri uri, CashedBitmap newState )
