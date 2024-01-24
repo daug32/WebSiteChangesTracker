@@ -24,6 +24,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libs.ImageProcessing.Tests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libs.Microsoft.Playwright", "Libs\Libs.Microsoft.Playwright\Libs.Microsoft.Playwright.csproj", "{41CC5729-A5AE-4756-ACB6-E3DED444265D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{FB48C990-7318-412F-A4B3-9FAADC4A77E0}"
+	ProjectSection(SolutionItems) = preProject
+		Images\output.png = Images\output.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,5 +70,6 @@ Global
 		{B0A744F7-3668-4FA8-BFDA-D4C8BC980FEF} = {E886D9E2-6769-476C-8114-EFF473C6C389}
 		{602A0A15-2C9A-4B02-A854-723D7435D839} = {E886D9E2-6769-476C-8114-EFF473C6C389}
 		{41CC5729-A5AE-4756-ACB6-E3DED444265D} = {E886D9E2-6769-476C-8114-EFF473C6C389}
+		{FB48C990-7318-412F-A4B3-9FAADC4A77E0} = {D9ECE104-9F8D-448E-B057-4C22279B056C}
 	EndGlobalSection
 EndGlobal

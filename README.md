@@ -4,7 +4,12 @@ Provides a console app to track changes at websites view<br/>
 * Monitor changes that are not entirely under your control
 * Find differences after big changes at your site like refactoring or migrating to another libs
 #### Known bugs: 
-* It works pretty randomly with JS sliders and iframes and sometimes can find differences even if there is none of them
+* It works pretty randomly with JS sliders with timed auto swiping and iframes - sometimes it can find differences even if there is none of them
+
+## Input
+To get all available commands type "help" into command line args
+## Output
+![output](Images/output.png)
 
 ## Configurating
 Configure app and add your website settings.<br/>
@@ -14,8 +19,8 @@ To see all available website settings check the [Website configuration model](ht
 ```json
 {
   "WebSiteComparerConfiguration": {
-    "ScreenshotDirectory": "C:\\Users\\user\\Downloads\\Screenshots",
-    "ChangesTrackingOutputDirectory": "C:\\Users\\user\\Downloads\\Screenshots\\Difference"
+    "ScreenshotDirectory": "C:\\Users\\user\\Downloads\\WebsiteChangesTracker\\Screenshots",
+    "ChangesTrackingOutputDirectory": "C:\\Users\\user\\Downloads\\WebsiteChangesTracker\\Difference"
   },
   "WebSites": [
     {
