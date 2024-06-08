@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
+using Libs.ImageProcessing.Implementation;
 
-namespace Libs.ImageProcessing.Implementation.Extensions;
+namespace Libs.ImageProcessing.Creators.Implementation;
 
 internal static class BitmapExtension
 {
     private const PixelFormat SupportedPixelFormat = Constants.SupportedPixelFormat;
 
-    public static Task<List<Color>> GetPixelArrayAsync( this Bitmap bitmap )
+    public static Task<Color[]> GetPixelArrayAsync( this Bitmap bitmap )
     {
         if ( bitmap == null )
         {
@@ -37,12 +38,12 @@ internal static class BitmapExtension
             pixelFormat );
     }
 
-    private static unsafe List<Color> GetPixelArrayInternal( this Bitmap bitmap )
+    private static unsafe Color[] GetPixelArrayInternal( this Bitmap bitmap )
     {
         int width = bitmap.Width;
         int height = bitmap.Height;
 
-        var result = new List<Color>( height * width );
+        var result = new Color[height * width];
 
         BitmapData data = bitmap.LockAllBits( ImageLockMode.ReadOnly, SupportedPixelFormat );
 
@@ -50,17 +51,18 @@ internal static class BitmapExtension
 
         for ( var y = 0; y < height; y++ )
         {
-            int rowIndex = y * data.Stride;
+            int sourceRowIndex = y * data.Stride;
+            int resultIndex = y * width;
             for ( var x = 0; x < width; x++ )
             {
-                int pos = rowIndex + x * 3;
+                int sourcePos = sourceRowIndex + x * 3;
 
                 Color color = Color.FromArgb(
-                    source[pos + 2],
-                    source[pos + 1],
-                    source[pos] );
+                    source[sourcePos + 2],
+                    source[sourcePos + 1],
+                    source[sourcePos] );
 
-                result.Add( color );
+                result[resultIndex + x] = color;
             }
         }
             

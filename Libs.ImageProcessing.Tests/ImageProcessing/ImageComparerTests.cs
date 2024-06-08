@@ -44,7 +44,7 @@ public class ImageComparerTests
         ImageComparingResult compareResult = await _imageComparer.CompareAsync( firstImage, secondImage );
 
         // Assert
-        Assert.IsFalse( compareResult.HasChanges );
+        Assert.That( compareResult.HasChanges, Is.False );
     }
 
     [Test]
@@ -74,10 +74,10 @@ public class ImageComparerTests
         ImageComparingResult compareResult = await _imageComparer.CompareAsync( firstImage, secondImage );
 
         // Assert
-        Assert.IsTrue( compareResult.HasChanges );
-        Assert.AreEqual( 1, compareResult.ChangesNumber );
+        Assert.That( compareResult.HasChanges, Is.True );
+        Assert.That( compareResult.ChangesNumber, Is.EqualTo( 1 ) );
 
-        Assert.IsTrue( compareResult.Bitmap.GetPixel( 1, 1 ) != Color.White );
+        Assert.That( compareResult.Bitmap.GetPixel( 1, 1 ), Is.Not.EqualTo( Color.White ) );
     }
 
     [Test]
@@ -107,12 +107,12 @@ public class ImageComparerTests
         ImageComparingResult compareResult = await _imageComparer.CompareAsync( firstImage, secondImage );
 
         // Assert
-        Assert.IsTrue( compareResult.HasChanges );
-        Assert.AreEqual( 3, compareResult.ChangesNumber );
+        Assert.That( compareResult.HasChanges, Is.True );
+        Assert.That( compareResult.ChangesNumber, Is.EqualTo( 3 ) );
 
-        Assert.IsTrue( compareResult.Bitmap.GetPixel( 1, 1 ) != Color.White );
-        Assert.IsTrue( compareResult.Bitmap.GetPixel( 0, 2 ) != Color.White );
-        Assert.IsTrue( compareResult.Bitmap.GetPixel( 2, 2 ) != Color.White );
+        Assert.That( compareResult.Bitmap.GetPixel( 1, 1 ), Is.Not.EqualTo( Color.White ) );
+        Assert.That( compareResult.Bitmap.GetPixel( 0, 2 ), Is.Not.EqualTo( Color.White ) );
+        Assert.That( compareResult.Bitmap.GetPixel( 2, 2 ), Is.Not.EqualTo( Color.White ) );
     }
 
     [Test]
@@ -138,11 +138,11 @@ public class ImageComparerTests
         ImageComparingResult comparingResult = await _imageComparer.CompareAsync( firstImage, secondImage );
 
         // Assert
-        Assert.IsTrue( comparingResult.HasChanges );
+        Assert.That( comparingResult.HasChanges, Is.True );
 
-        Assert.AreEqual( 2, comparingResult.ChangesNumber );
-        Assert.IsTrue( comparingResult.Bitmap.GetPixel( 2, 0 ) != Color.White );
-        Assert.IsTrue( comparingResult.Bitmap.GetPixel( 2, 1 ) != Color.White );
+        Assert.That( comparingResult.ChangesNumber, Is.EqualTo( 2 ) );
+        Assert.That( comparingResult.Bitmap.GetPixel( 2, 0 ), Is.Not.EqualTo( Color.White ) );
+        Assert.That( comparingResult.Bitmap.GetPixel( 2, 1 ), Is.Not.EqualTo( Color.White ) );
     }
 
     [Test]
@@ -168,11 +168,11 @@ public class ImageComparerTests
         ImageComparingResult comparingResult = await _imageComparer.CompareAsync( firstImage, secondImage );
 
         // Assert
-        Assert.IsTrue( comparingResult.HasChanges );
+        Assert.That( comparingResult.HasChanges, Is.True );
 
-        Assert.AreEqual( 2, comparingResult.ChangesNumber );
-        Assert.IsTrue( comparingResult.Bitmap.GetPixel( 2, 0 ) != Color.White );
-        Assert.IsTrue( comparingResult.Bitmap.GetPixel( 2, 1 ) != Color.White );
+        Assert.That( comparingResult.ChangesNumber, Is.EqualTo( 2 ) );
+        Assert.That( comparingResult.Bitmap.GetPixel( 2, 0 ), Is.Not.EqualTo( Color.White ) );
+        Assert.That( comparingResult.Bitmap.GetPixel( 2, 1 ), Is.Not.EqualTo( Color.White ) );
     }
 
     [Test]
@@ -199,11 +199,11 @@ public class ImageComparerTests
         ImageComparingResult comparingResult = await _imageComparer.CompareAsync( firstImage, secondImage );
 
         // Assert
-        Assert.IsTrue( comparingResult.HasChanges );
+        Assert.That( comparingResult.HasChanges, Is.True );
 
-        Assert.AreEqual( 2, comparingResult.ChangesNumber );
-        Assert.IsTrue( comparingResult.Bitmap.GetPixel( 0, 2 ) != Color.White );
-        Assert.IsTrue( comparingResult.Bitmap.GetPixel( 1, 2 ) != Color.White );
+        Assert.That( comparingResult.ChangesNumber, Is.EqualTo( 2 ) );
+        Assert.That( comparingResult.Bitmap.GetPixel( 0, 2 ), Is.Not.EqualTo( Color.White ) );
+        Assert.That( comparingResult.Bitmap.GetPixel( 1, 2 ), Is.Not.EqualTo( Color.White ) );
     }
 
     [Test]
@@ -230,11 +230,11 @@ public class ImageComparerTests
         ImageComparingResult comparingResult = await _imageComparer.CompareAsync( firstImage, secondImage );
 
         // Assert
-        Assert.IsTrue( comparingResult.HasChanges );
+        Assert.That( comparingResult.HasChanges, Is.True );
 
-        Assert.AreEqual( 2, comparingResult.ChangesNumber );
-        Assert.IsTrue( comparingResult.Bitmap.GetPixel( 0, 2 ) != Color.White );
-        Assert.IsTrue( comparingResult.Bitmap.GetPixel( 1, 2 ) != Color.White );
+        Assert.That( comparingResult.ChangesNumber, Is.EqualTo( 2 ) );
+        Assert.That( comparingResult.Bitmap.GetPixel( 0, 2 ), Is.Not.EqualTo( Color.White ) );
+        Assert.That( comparingResult.Bitmap.GetPixel( 1, 2 ), Is.Not.EqualTo( Color.White ) );
     }
 
     [Test]
@@ -249,7 +249,7 @@ public class ImageComparerTests
         ImageComparingResult compareResult = await _imageComparer.CompareAsync( firstImage, firstImage );
 
         // Assert
-        Assert.IsFalse( compareResult.HasChanges );
+        Assert.That( compareResult.HasChanges, Is.False );
         compareResult.Bitmap.Save( fileToSave, ImageFormat.Jpeg );
     }
 
@@ -266,7 +266,7 @@ public class ImageComparerTests
         ImageComparingResult compareResult = await _imageComparer.CompareAsync( firstImage, secondImage );
 
         // Assert
-        Assert.IsTrue( compareResult.HasChanges );
+        Assert.That( compareResult.HasChanges, Is.True );
         compareResult.Bitmap.Save( fileToSave, ImageFormat.Jpeg );
     }
 
@@ -283,8 +283,8 @@ public class ImageComparerTests
         ImageComparingResult compareResult = await _imageComparer.CompareAsync( firstImage, secondImage );
 
         // Assert
-        Assert.IsTrue( compareResult.HasChanges );
-        Assert.IsTrue( compareResult.PercentOfChanges < 2 );
+        Assert.That( compareResult.HasChanges, Is.True );
+        Assert.That( compareResult.PercentOfChanges < 2, Is.True );
         compareResult.Bitmap.Save( fileToSave, ImageFormat.Jpeg );
     }
 }

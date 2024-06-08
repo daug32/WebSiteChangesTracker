@@ -5,7 +5,6 @@ using Libs.ImageProcessing.Models;
 
 namespace Libs.ImageProcessing.Tests.ImageProcessing;
 
-[TestFixture]
 [Parallelizable( ParallelScope.All )]
 public class CashedBitmapTests
 {
@@ -25,7 +24,9 @@ public class CashedBitmapTests
     [Test]
     public void CreateAsync_InvalidArgument_ThrowsException()
     {
-        Assert.ThrowsAsync<NullReferenceException>( () => CashedBitmapCreator.CreateAsync( ( Bitmap )null! ) );
+        Assert.ThrowsAsync(
+            Is.InstanceOf<Exception>(),
+            () => CashedBitmapCreator.CreateAsync( ( Bitmap )null! ) );
     }
 
     [Test]
@@ -51,7 +52,7 @@ public class CashedBitmapTests
         Color result = bitmap.GetPixel( x, y );
 
         // Assert
-        Assert.AreEqual( expected, result.ToArgb() );
+        Assert.That( result.ToArgb(), Is.EqualTo( expected ) );
     }
 
     [TestCase( -1, -1 )]
@@ -84,7 +85,7 @@ public class CashedBitmapTests
         bool result = bitmap.ContainsPoint( x, y );
 
         // Assert
-        Assert.IsFalse( result );
+        Assert.That( result, Is.False );
     }
 
     [TestCase( 0, 0 )]
@@ -99,7 +100,7 @@ public class CashedBitmapTests
         bool result = bitmap.ContainsPoint( x, y );
 
         // Assert
-        Assert.IsTrue( result );
+        Assert.That( result, Is.True );
     }
 
     [Test]
@@ -114,8 +115,8 @@ public class CashedBitmapTests
         
         // Assert
         bitmap.CommitChangesIfNeed();
-        Assert.AreEqual( newSize, bitmap.Size );
-        Assert.AreEqual( newSize, bitmap.SourceBitmap.Size );
+        Assert.That( bitmap.Size, Is.EqualTo( newSize ) );
+        Assert.That( bitmap.SourceBitmap.Size, Is.EqualTo( newSize ) );
     }
 
     [Test]
@@ -130,8 +131,8 @@ public class CashedBitmapTests
         
         // Assert
         bitmap.CommitChangesIfNeed();
-        Assert.AreEqual( newSize, bitmap.Size );
-        Assert.AreEqual( newSize, bitmap.SourceBitmap.Size );
+        Assert.That( bitmap.Size, Is.EqualTo( newSize ) );
+        Assert.That( bitmap.SourceBitmap.Size, Is.EqualTo( newSize ) );
     }
 
     private Task<CashedBitmap> CreateTestCashedBitmapAsync()

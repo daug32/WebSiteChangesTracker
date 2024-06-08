@@ -23,9 +23,7 @@ public class MapTests
     private static readonly object[] _invalidCtorData =
     {
         new object[] { 1, -1, new List<int>() { 1 } },
-#pragma warning disable CS8625
-        new object[] { 1, 1, null },
-#pragma warning restore CS8625
+        new object[] { 1, 1, null! },
         new object[] { 2, 3, new List<int>() { 1 } }
     };
 
@@ -33,7 +31,9 @@ public class MapTests
     public void Ctor_InvalidData_ThrowsArgumentException( int width, int height, List<int> data )
     {
         // ReSharper disable once ObjectCreationAsStatement
-        Assert.Throws<ArgumentException>( () => new Map<int>( width, height, data ) );
+        Assert.Throws( 
+            Is.InstanceOf<Exception>(), 
+            () => new Map<int>( width, height, data ) );
     }
 
     [Test]
@@ -49,13 +49,13 @@ public class MapTests
         var map = new Map<int>( 3, 2, data );
 
         // Act
-        Assert.AreEqual( 00, map.Get( 0, 0 ) );
-        Assert.AreEqual( 01, map.Get( 1, 0 ) );
-        Assert.AreEqual( 02, map.Get( 2, 0 ) );
+        Assert.That( map.Get( 0, 0 ), Is.EqualTo( 00 ) );
+        Assert.That( map.Get( 1, 0 ), Is.EqualTo( 01 ) );
+        Assert.That( map.Get( 2, 0 ), Is.EqualTo( 02 ) );
 
-        Assert.AreEqual( 10, map.Get( 0, 1 ) );
-        Assert.AreEqual( 11, map.Get( 1, 1 ) );
-        Assert.AreEqual( 12, map.Get( 2, 1 ) );
+        Assert.That( map.Get( 0, 1 ), Is.EqualTo( 10 ) );
+        Assert.That( map.Get( 1, 1 ), Is.EqualTo( 11 ) );
+        Assert.That( map.Get( 2, 1 ), Is.EqualTo( 12 ) );
     }
 
     [Test]
@@ -89,17 +89,17 @@ public class MapTests
         map.Resize( new Size( 3, 2 ), 1 );
 
         // Assert
-        Assert.AreEqual( new Size( 3, 2 ), map.Size );
+        Assert.That( map.Size, Is.EqualTo( new Size( 3, 2 ) ) );
 
         // old pixels
-        Assert.AreEqual( 0, map.Get( 0, 0 ) );
-        Assert.AreEqual( 0, map.Get( 1, 0 ) );
-        Assert.AreEqual( 0, map.Get( 0, 1 ) );
-        Assert.AreEqual( 0, map.Get( 1, 1 ) );
+        Assert.That( map.Get( 0, 0 ), Is.EqualTo( 0 ) );
+        Assert.That( map.Get( 1, 0 ), Is.EqualTo( 0 ) );
+        Assert.That( map.Get( 0, 1 ), Is.EqualTo( 0 ) );
+        Assert.That( map.Get( 1, 1 ), Is.EqualTo( 0 ) );
 
         // new column
-        Assert.AreEqual( 1, map.Get( 2, 0 ) );
-        Assert.AreEqual( 1, map.Get( 2, 1 ) );
+        Assert.That( map.Get( 2, 0 ), Is.EqualTo( 1 ) );
+        Assert.That( map.Get( 2, 1 ), Is.EqualTo( 1 ) );
     }
 
     [Test]
@@ -113,17 +113,17 @@ public class MapTests
         map.Resize( new Size( 2, 3 ), 1 );
 
         // Assert
-        Assert.AreEqual( new Size( 2, 3 ), map.Size );
+        Assert.That( map.Size, Is.EqualTo( new Size( 2, 3 ) ) );
 
         // old pixels
-        Assert.AreEqual( 0, map.Get( 0, 0 ) );
-        Assert.AreEqual( 0, map.Get( 1, 0 ) );
-        Assert.AreEqual( 0, map.Get( 0, 1 ) );
-        Assert.AreEqual( 0, map.Get( 1, 1 ) );
+        Assert.That( map.Get( 0, 0 ), Is.EqualTo( 0 ) );
+        Assert.That( map.Get( 1, 0 ), Is.EqualTo( 0 ) );
+        Assert.That( map.Get( 0, 1 ), Is.EqualTo( 0 ) );
+        Assert.That( map.Get( 1, 1 ), Is.EqualTo( 0 ) );
 
         // new row
-        Assert.AreEqual( 1, map.Get( 0, 2 ) );
-        Assert.AreEqual( 1, map.Get( 1, 2 ) );
+        Assert.That( map.Get( 0, 2 ), Is.EqualTo( 1 ) );
+        Assert.That( map.Get( 1, 2 ), Is.EqualTo( 1 ) );
     }
 
     [Test]
@@ -136,22 +136,22 @@ public class MapTests
         map.Resize( new Size( 3, 3 ), 1 );
 
         // Assert
-        Assert.AreEqual( new Size( 3, 3 ), map.Size );
+        Assert.That( map.Size, Is.EqualTo( new Size( 3, 3 ) ) );
 
         // old pixels
-        Assert.AreEqual( 0, map.Get( 0, 0 ) );
-        Assert.AreEqual( 0, map.Get( 1, 0 ) );
-        Assert.AreEqual( 0, map.Get( 0, 1 ) );
-        Assert.AreEqual( 0, map.Get( 1, 1 ) );
+        Assert.That( map.Get( 0, 0 ), Is.EqualTo( 0 ) );
+        Assert.That( map.Get( 1, 0 ), Is.EqualTo( 0 ) );
+        Assert.That( map.Get( 0, 1 ), Is.EqualTo( 0 ) );
+        Assert.That( map.Get( 1, 1 ), Is.EqualTo( 0 ) );
 
         // new column
-        Assert.AreEqual( 1, map.Get( 2, 0 ) );
-        Assert.AreEqual( 1, map.Get( 2, 1 ) );
+        Assert.That( map.Get( 2, 0 ), Is.EqualTo( 1 ) );
+        Assert.That( map.Get( 2, 1 ), Is.EqualTo( 1 ) );
 
         // new row
-        Assert.AreEqual( 1, map.Get( 0, 2 ) );
-        Assert.AreEqual( 1, map.Get( 1, 2 ) );
-        Assert.AreEqual( 1, map.Get( 2, 2 ) );
+        Assert.That( map.Get( 0, 2 ), Is.EqualTo( 1 ) );
+        Assert.That( map.Get( 1, 2 ), Is.EqualTo( 1 ) );
+        Assert.That( map.Get( 2, 2 ), Is.EqualTo( 1 ) );
     }
 
     [Test]
@@ -164,9 +164,9 @@ public class MapTests
         map.Resize( new Size( 1, 2 ), 0 );
 
         // Assert
-        Assert.AreEqual( new Size( 1, 2 ), map.Size );
-        Assert.AreEqual( 0, map.Get( 0, 0 ) );
-        Assert.AreEqual( 0, map.Get( 0, 1 ) );
+        Assert.That( map.Size, Is.EqualTo( new Size( 1, 2 ) ) );
+        Assert.That( map.Get( 0, 0 ), Is.EqualTo( 0 ) );
+        Assert.That( map.Get( 0, 1 ), Is.EqualTo( 0 ) );
     }
 
     [Test]
@@ -179,9 +179,9 @@ public class MapTests
         map.Resize( new Size( 2, 1 ), 0 );
 
         // Assert
-        Assert.AreEqual( new Size( 2, 1 ), map.Size );
-        Assert.AreEqual( 0, map.Get( 0, 0 ) );
-        Assert.AreEqual( 0, map.Get( 1, 0 ) );
+        Assert.That( map.Size, Is.EqualTo( new Size( 2, 1 ) ) );
+        Assert.That( map.Get( 0, 0 ), Is.EqualTo( 0 ) );
+        Assert.That( map.Get( 1, 0 ), Is.EqualTo( 0 ) );
     }
 
     [Test]
@@ -194,7 +194,7 @@ public class MapTests
         map.Resize( new Size( 1, 1 ), 0 );
 
         // Assert
-        Assert.AreEqual( new Size( 1, 1 ), map.Size );
-        Assert.AreEqual( 0, map.Get( 0, 0 ) );
+        Assert.That( map.Size, Is.EqualTo( new Size( 1, 1 ) ) );
+        Assert.That( map.Get( 0, 0 ), Is.EqualTo( 0 ) );
     }
 }

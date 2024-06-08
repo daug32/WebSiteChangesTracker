@@ -10,18 +10,20 @@ public class Map<T>
     private T[] _data;
     public Size Size { get; private set; }
 
-    public Map( 
-        int width, 
-        int height,
-        ICollection<T> data )
+    public Map( int width, int height,ICollection<T> data )
+        : this ( width, height, data.ToArray() )
     {
-        if ( data == null || data.Count != width * height )
+    }
+
+    public Map( int width, int height, T[] data )
+    {
+        if ( data == null || data.Length != width * height )
         {
             throw new ArgumentException( nameof( data ) );
         }
 
         Size = new Size( width, height );
-        _data = data.ToArray();
+        _data = data;
     }
 
     public T GetByOffset( int index )

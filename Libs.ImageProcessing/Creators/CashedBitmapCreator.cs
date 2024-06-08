@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Threading.Tasks;
-using Libs.ImageProcessing.Implementation.Extensions;
+using Libs.ImageProcessing.Creators.Implementation;
 using Libs.ImageProcessing.Models;
 
 namespace Libs.ImageProcessing.Creators;
