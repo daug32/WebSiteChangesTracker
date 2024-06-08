@@ -17,26 +17,24 @@ public class CashedBitmapTests
     private readonly Color _testBitmapColor = Color.Blue;
 
     [Test]
-    public Task CreateAsync_CreateForBigBitmap_DoesntThrow()
+    public void CreateAsync_CreateForBigBitmap_DoesntThrow()
     {
         Assert.DoesNotThrowAsync( async () => await CashedBitmapCreator.CreateAsync( BitmapCreator.CreateEmpty( BigWidth, BigHeight ) ) );
-        return Task.CompletedTask;
     }
 
     [Test]
-    public async Task CreateAsync_CreateThreeCashedBitmapsForBigBitmaps_AsynchronousCreatingOfCashedBitmaps()
-    {
-        Task<CashedBitmap> a = CashedBitmapCreator.CreateAsync( BitmapCreator.CreateEmpty( BigWidth, BigHeight ) );
-        Task<CashedBitmap> b = CashedBitmapCreator.CreateAsync( BitmapCreator.CreateEmpty( BigWidth, BigHeight ) );
-        Task<CashedBitmap> c = CashedBitmapCreator.CreateAsync( BitmapCreator.CreateEmpty( BigWidth, BigHeight ) );
-
-        await Task.WhenAll( a, b, c );
-    }
-
-    [Test]
-    public void CreateAsync_BitmapIsNull_ThrowsException()
+    public void CreateAsync_InvalidArgument_ThrowsException()
     {
         Assert.ThrowsAsync<NullReferenceException>( () => CashedBitmapCreator.CreateAsync( ( Bitmap )null! ) );
+    }
+
+    [Test]
+    public Task CreateAsync_CreateThreeCashedBitmapsForBigBitmaps_AsynchronousCreatingOfCashedBitmaps()
+    {
+        return Task.WhenAll( 
+            CashedBitmapCreator.CreateAsync( BitmapCreator.CreateEmpty( BigWidth, BigHeight ) ),
+            CashedBitmapCreator.CreateAsync( BitmapCreator.CreateEmpty( BigWidth, BigHeight ) ),
+            CashedBitmapCreator.CreateAsync( BitmapCreator.CreateEmpty( BigWidth, BigHeight ) ) );
     }
 
     [TestCase( 0, 0 )]
