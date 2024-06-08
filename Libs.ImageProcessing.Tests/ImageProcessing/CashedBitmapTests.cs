@@ -5,6 +5,8 @@ using Libs.ImageProcessing.Models;
 
 namespace Libs.ImageProcessing.Tests.ImageProcessing;
 
+[TestFixture]
+[Parallelizable( ParallelScope.All )]
 public class CashedBitmapTests
 {
     private const int BigWidth = 4000;
