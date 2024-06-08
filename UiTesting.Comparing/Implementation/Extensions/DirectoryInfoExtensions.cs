@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace WebSiteComparer.Core.Implementation.Extensions;
+namespace UiTesting.Comparing.Implementation.Extensions;
 
 internal static class DirectoryInfoExtensions
 {

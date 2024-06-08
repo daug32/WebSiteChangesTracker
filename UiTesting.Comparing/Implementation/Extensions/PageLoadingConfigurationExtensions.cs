@@ -1,7 +1,7 @@
 ﻿using Microsoft.Playwright;
 using WebSiteComparer.Core.Configurations;
 
-namespace WebSiteComparer.Core.Implementation.Extensions;
+namespace UiTesting.Comparing.Implementation.Extensions;
 
 internal static class PageLoadingConfigurationExtensions
 {

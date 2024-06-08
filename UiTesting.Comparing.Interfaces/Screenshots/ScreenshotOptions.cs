@@ -1,5 +1,4 @@
-﻿using System;
-using WebSiteComparer.Core.Configurations;
+﻿using WebSiteComparer.Core.Configurations;
 
 namespace WebSiteComparer.Core.Screenshots;
 

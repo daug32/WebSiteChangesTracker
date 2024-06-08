@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ImageProcessing;
 using ImageProcessing.Implementation.Comparing;
+using UiTesting.Comparing.Implementation.ChangesDetecting;
+using UiTesting.Comparing.Implementation.Screenshots;
 using WebSiteComparer.Core.ChangesTracking;
 using WebSiteComparer.Core.Configurations;
-using WebSiteComparer.Core.Implementation.ChangesDetecting;
-using WebSiteComparer.Core.Implementation.Screenshots;
 using WebSiteComparer.Core.Screenshots;
 
-namespace WebSiteComparer.Core;
+namespace UiTesting.Comparing;
 
 public static class ConfigureDependencies
 {

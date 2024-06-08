@@ -3,7 +3,7 @@
     <PropertyGroup>
         <ImplicitUsings>disable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
@@ -17,6 +17,7 @@
       <ProjectReference Include="..\ImageProcessing.Extensions\ImageProcessing.Extensions.csproj" />
       <ProjectReference Include="..\ImageProcessing\ImageProcessing.csproj" />
       <ProjectReference Include="..\UiTesting.Playwright\UiTesting.Playwright.csproj" />
+      <ProjectReference Include="..\UiTesting.Comparing.Interfaces\UiTesting.Comparing.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

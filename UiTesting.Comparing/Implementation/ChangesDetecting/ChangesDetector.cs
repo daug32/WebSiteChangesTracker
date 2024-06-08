@@ -9,12 +9,12 @@ using ImageProcessing.Models;
 using UiTesting.Playwright.Factories;
 using Microsoft.Extensions.Logging;
 using Microsoft.Playwright;
+using UiTesting.Comparing.Implementation.Extensions;
 using WebSiteComparer.Core.ChangesTracking;
 using WebSiteComparer.Core.Configurations;
-using WebSiteComparer.Core.Implementation.Extensions;
 using WebSiteComparer.Core.Screenshots;
 
-namespace WebSiteComparer.Core.Implementation.ChangesDetecting;
+namespace UiTesting.Comparing.Implementation.ChangesDetecting;
 
 internal class ChangesDetector : IChangesDetector
 {
@@ -22,10 +22,10 @@ internal class ChangesDetector : IChangesDetector
     private readonly IScreenshotRepository _screenshotRepository;
     private readonly IImageComparer _imageComparer;
     private readonly ILogger _logger;
-    
+
     private readonly string _comparingOutputDirectory;
 
-    public ChangesDetector( 
+    public ChangesDetector(
         IImageComparer imageComparer,
         ILogger<ChangesDetector> logger,
         IScreenshotTaker screenshotTaker,
@@ -44,7 +44,7 @@ internal class ChangesDetector : IChangesDetector
         var screenshotOptions = configurations
             .SelectMany( configuration => configuration.Urls
                 .Select( url => new ScreenshotOptions(
-                    new Uri( url ), 
+                    new Uri( url ),
                     configuration.ScreenshotWidth,
                     configuration.PageLoadingConfiguration ) ) )
             .ToList();
@@ -55,7 +55,7 @@ internal class ChangesDetector : IChangesDetector
     public Task FindChangesAsync( WebsiteConfiguration configuration )
     {
         var screenshotOptions = configuration.Urls
-            .Select( url => new ScreenshotOptions( 
+            .Select( url => new ScreenshotOptions(
                 new Uri( url ),
                 configuration.ScreenshotWidth,
                 configuration.PageLoadingConfiguration ) )
@@ -72,25 +72,24 @@ internal class ChangesDetector : IChangesDetector
             directoryInfo.ClearDirectory();
         }
 
-        await using ( var browserFactory = new BrowserFactory() )
-        {
-            IBrowser browser = await browserFactory.GetBrowserAsync();
+        await using var browserFactory = new BrowserFactory();
+        IBrowser browser = await browserFactory.GetBrowserAsync();
 
-            await Parallel.ForEachAsync(
-                screenshotOptions,
-                async ( screenshotOption, _ ) =>
-                {
-                    IPage page = await browser.NewPageAsync( 
-                        screenshotOption
-                            .PageLoadingConfiguration
-                            .ToPlaywrightPageOptions() );
-                    CashedBitmap screenshot = await _screenshotTaker.TakeScreenshotAsync( page, screenshotOption );
+        await Parallel.ForEachAsync(
+            screenshotOptions,
+            async ( screenshotOption, _ ) =>
+            {
+                IPage page = await browser.NewPageAsync(
+                    screenshotOption
+                        .PageLoadingConfiguration
+                        .ToPlaywrightPageOptions() );
 
-                    await Task.WhenAll(
-                        CompareToOldVersionAsync( screenshotOption.Uri, screenshot ),
-                        page.CloseAsync() );
-                } );
-        }
+                CashedBitmap screenshot = await _screenshotTaker.TakeScreenshotAsync( page, screenshotOption );
+
+                await Task.WhenAll(
+                    CompareToOldVersionAsync( screenshotOption.Uri, screenshot ),
+                    page.CloseAsync() );
+            } );
     }
 
     private async Task CompareToOldVersionAsync( Uri uri, CashedBitmap newState )

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using ImageProcessing.Models;
+﻿using ImageProcessing.Models;
 using Microsoft.Playwright;
 
 namespace WebSiteComparer.Core.Screenshots;

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebSiteComparer.Console.Commands;
-using WebSiteComparer.Core;
+using UiTesting.Comparing;
 using WebSiteComparer.Core.Configurations;
 using WebSiteComparer.UseCases;
 

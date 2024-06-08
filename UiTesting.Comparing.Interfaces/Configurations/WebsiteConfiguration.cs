@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace WebSiteComparer.Core.Configurations;
+﻿namespace WebSiteComparer.Core.Configurations;
 
 public class WebsiteConfiguration
 {

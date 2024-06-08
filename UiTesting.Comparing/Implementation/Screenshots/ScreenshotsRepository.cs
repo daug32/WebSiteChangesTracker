@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using ImageProcessing.Models;
+using UiTesting.Comparing.Implementation.Extensions;
 using WebSiteComparer.Core.Configurations;
-using WebSiteComparer.Core.Implementation.Extensions;
 using WebSiteComparer.Core.Screenshots;
 
-namespace WebSiteComparer.Core.Implementation.Screenshots;
+namespace UiTesting.Comparing.Implementation.Screenshots;
 
 internal class ScreenshotsRepository : IScreenshotRepository
 {

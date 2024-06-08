@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace WebSiteComparer.Core.Implementation.Extensions;
+namespace UiTesting.Comparing.Implementation.Extensions;
 
 internal static class UriExtensions
 {

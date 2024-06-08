@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Playwright;
 using WebSiteComparer.Core.Screenshots;
 
-namespace WebSiteComparer.Core.Implementation.Screenshots;
+namespace UiTesting.Comparing.Implementation.Screenshots;
 
 internal class ScreenshotTaker : IScreenshotTaker
 {
