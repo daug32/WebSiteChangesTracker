@@ -33,6 +33,12 @@ public class CashedBitmapTests
         await Task.WhenAll( a, b, c );
     }
 
+    [Test]
+    public void CreateAsync_BitmapIsNull_ThrowsException()
+    {
+        Assert.ThrowsAsync<NullReferenceException>( () => CashedBitmapCreator.CreateAsync( ( Bitmap )null! ) );
+    }
+
     [TestCase( 0, 0 )]
     [TestCase( TestBitmapWidth - 1, 0 )]
     [TestCase( 0, TestBitmapHeight - 1 )]
