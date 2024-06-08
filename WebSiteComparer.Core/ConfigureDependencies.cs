@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Libs.ImageProcessing;
-using Libs.ImageProcessing.Implementation.Comparing;
+using ImageProcessing;
+using ImageProcessing.Implementation.Comparing;
 using WebSiteComparer.Core.ChangesTracking;
 using WebSiteComparer.Core.Configurations;
 using WebSiteComparer.Core.Implementation.ChangesDetecting;

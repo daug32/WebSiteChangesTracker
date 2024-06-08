@@ -1,5 +1,4 @@
-﻿using WebSiteComparer.Core;
-using WebSiteComparer.Core.Configurations;
+﻿using WebSiteComparer.Core.Configurations;
 
 namespace WebSiteComparer.Console.Commands;
 

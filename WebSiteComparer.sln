@@ -15,13 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{FB48C9
 		Images\output.png = Images\output.png
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libs.ImageProcessing", "Libs.ImageProcessing\Libs.ImageProcessing.csproj", "{5CE0B3B7-7D3D-409E-BED3-8F5CAEAB0CBD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessing", "ImageProcessing\ImageProcessing.csproj", "{5CE0B3B7-7D3D-409E-BED3-8F5CAEAB0CBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libs.ImageProcessing.Extensions", "Libs.ImageProcessing.Extensions\Libs.ImageProcessing.Extensions.csproj", "{30ACFF24-A636-4EAC-99ED-3C6AD5CBD214}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessing.Extensions", "ImageProcessing.Extensions\ImageProcessing.Extensions.csproj", "{30ACFF24-A636-4EAC-99ED-3C6AD5CBD214}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libs.ImageProcessing.Tests", "Libs.ImageProcessing.Tests\Libs.ImageProcessing.Tests.csproj", "{406A06C2-656B-46CE-9CBA-0FB39E791AE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessing.Tests", "ImageProcessing.Tests\ImageProcessing.Tests.csproj", "{406A06C2-656B-46CE-9CBA-0FB39E791AE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libs.Microsoft.Playwright", "Libs.Microsoft.Playwright\Libs.Microsoft.Playwright.csproj", "{F7D8F3A5-7D76-4CBD-B2A1-B8F99CFF856D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UiTesting.Playwright", "UiTesting.Playwright\UiTesting.Playwright.csproj", "{F7D8F3A5-7D76-4CBD-B2A1-B8F99CFF856D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ImageProcessing", "ImageProcessing", "{3E71BFB6-07F3-4E09-B265-9495EA6D50F8}"
 EndProject

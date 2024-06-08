@@ -1,5 +1,5 @@
 ﻿using System;
-using Libs.ImageProcessing.Models;
+using ImageProcessing.Models;
 
 namespace WebSiteComparer.Core.Screenshots;
 

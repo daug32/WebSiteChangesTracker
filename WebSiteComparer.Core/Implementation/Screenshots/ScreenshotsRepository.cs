@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Libs.ImageProcessing.Models;
+using ImageProcessing.Models;
 using WebSiteComparer.Core.Configurations;
 using WebSiteComparer.Core.Implementation.Extensions;
 using WebSiteComparer.Core.Screenshots;
